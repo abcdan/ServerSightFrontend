@@ -3,8 +3,11 @@ import type {HttpResponse} from "./httpResponse";
 import {Jwt} from "../auth/jwt";
 
 export class HttpClient {
-    static async get(relativeUrl: string): Promise<HttpResponse> {
-        const response = await fetch(BASE_API_URL + relativeUrl, {
+    static async get(relativeUrl: string, params?: any): Promise<HttpResponse> {
+        const url = new URL(BASE_API_URL + relativeUrl)
+        url.search = new URLSearchParams(params).toString()
+
+        const response = await fetch(url.toString(), {
             headers: this._getHeaders(),
         })
 

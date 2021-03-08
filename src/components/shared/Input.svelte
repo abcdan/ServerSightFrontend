@@ -16,10 +16,10 @@
         border: none;
         border-bottom: 2px solid #344966;
         border-radius: 1px;
+        margin: 0;
+        padding: 0;
     }
 </style>
 
-<label>
-    {labelTxt}
-    <input {value} placeholder={placeholder} on:input={onInput} type={type}>
-</label>
+<label for="input">{labelTxt}</label>
+<input id="input" {value} placeholder={placeholder} on:input={onInput} type={type}>

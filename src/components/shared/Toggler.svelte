@@ -36,7 +36,7 @@
 </style>
 
 {#key value}
-    <button transition:slide={{x:50,duration:200}} class={cssClass} on:click={onToggle}>
+    <button transition:slide={{x:50,duration:200}} class={cssClass} on:click|preventDefault={onToggle}>
         <span>
             <slot />
         </span>

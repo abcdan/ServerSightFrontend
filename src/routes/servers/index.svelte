@@ -3,33 +3,71 @@
     import {onMount} from "svelte";
     import ServerList from "../../components/server/ServerList.svelte";
     import ServerFilter from "../../components/server/ServerFilter.svelte";
+    import Link from "../../components/shared/Link.svelte";
 
     let servers = []
     onMount(async () => {
         servers = await ServerService.getUserServers()
     })
+
+    function onFilter(event): void {
+        console.log('filter called')
+        const filterData = event.detail
+
+        // TODO add exception handling
+        ServerService.getUserServers({
+            title: filterData.name,
+            powerstatus: filterData.powerstatus
+        }).then((filteredServers) => {
+            console.log(servers)
+            servers = filteredServers
+        })
+    }
 </script>
 
 <style>
     section {
         margin: 0;
+        padding: 10px;
+    }
+
+    p {
+        margin: 0;
         padding: 0;
+    }
+
+    div.add-server {
+        width: 125px;
+        margin-bottom: 10px;
+    }
+
+    span {
+        display: block;
+        text-align: center;
+    }
+
+    span.plus-sign {
+        display: inline;
+        font-size: 24px;
+        color: #BFCC94;
     }
 
     div.container {
         width: 100%;
-        height: 100vw;
+        min-height: 100%;
     }
 
     section.server-filter {
+        position: fixed;
         display: inline-block;
-        border-right: 1px solid #344966;
-        width: 30vw;
+        border-right: 2px solid #344966;
+        width: 25vw;
         height: 100vh;
     }
     section.servers-list {
         display: inline-block;
-        width: 68.9vw;
+        width: calc(75vw - 60px);
+        float: right;
         height: 100vh;
     }
 </style>
@@ -40,9 +78,9 @@
 <div class="container">
     <section class="server-filter">
         <header>
-            <h1>Server filters</h1>
+            <h1>Filter servers</h1>
         </header>
-        <ServerFilter />
+        <ServerFilter on:filter={onFilter} />
     </section>
     <section class="servers-list">
         <header>
@@ -52,6 +90,14 @@
             Here are all your servers you have previously added.
             On the left you can choose between different filters.
         </p>
+        <div class="add-server">
+            <Link href="/servers/add/">
+                <span>
+                    <span class="plus-sign">+</span>
+                    Add server
+                </span>
+            </Link>
+        </div>
         <!--TODO add loading spinner-->
         <ServerList {servers} />
     </section>

@@ -45,6 +45,7 @@
         {/if}
     </div>
     <h1>{server.title}</h1>
+    <span>Server power: {server.powerStatus ? 'on': 'off'}</span>
     <div>
         <Link href="/server/{server.id}">
             <span>View {server.title} server</span>

@@ -12,7 +12,9 @@
         color: #F0F4EF;
         text-align: center;
         border: none;
-        border-radius: 1px;
+        border-radius: 5px;
+        padding: 0 !important;
+        margin: 0 !important;
     }
 </style>
 

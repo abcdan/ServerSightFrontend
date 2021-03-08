@@ -20,6 +20,7 @@
             fieldsErrors = []
             goto('/servers', {});
         }).catch((err) => {
+            console.log(err)
             if (err instanceof FieldsErrors) {
                 fieldsErrors = (err as FieldsErrors).fields
             }
@@ -40,7 +41,7 @@
 <Container>
     <h1>Server sight login</h1>
     <ErrorList fieldsErrors={fieldsErrors} />
-    <form on:submit|preventDefault>
+    <form on:submit|preventDefault={submitLogin}>
         <div>
             <AuthForm on:value={(newUser) => user = newUser.detail}/>
         </div>

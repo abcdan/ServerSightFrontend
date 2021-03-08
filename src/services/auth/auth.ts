@@ -3,6 +3,7 @@ import {HttpClient} from "../httpClient/httpClient";
 import {FieldError} from "../error/field.error";
 import {FieldsErrors} from "../error/fields.error";
 import { httpResponseToLocalException } from "../httpClient/httpExceptionHandler";
+import {Jwt} from "./jwt";
 
 export class Auth {
     /**
@@ -13,7 +14,7 @@ export class Auth {
         const response = await HttpClient.post('user/login', user)
 
         if(response.statusCode === 202) {
-            localStorage.setItem('jwtToken', (response.content as any).token)
+            Jwt.setJwt((response.content as any).token)
             return
         } else {
             throw httpResponseToLocalException(response)

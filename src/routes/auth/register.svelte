@@ -43,7 +43,7 @@
     <h1>Register sight register</h1>
     <Link href="auth/login">Already have an account?</Link>
     <ErrorList fieldsErrors={fieldsErrors} />
-    <form on:submit|preventDefault>
+    <form on:submit|preventDefault={submitRegister}>
         <div>
             <AuthForm on:value={(newUser) => user = newUser.detail}/>
         </div>

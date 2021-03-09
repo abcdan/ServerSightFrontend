@@ -20,7 +20,6 @@
             fieldsErrors = []
             goto('/servers', {});
         }).catch((err) => {
-            console.log(err)
             if (err instanceof FieldsErrors) {
                 fieldsErrors = (err as FieldsErrors).fields
             }

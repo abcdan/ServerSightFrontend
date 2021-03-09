@@ -11,12 +11,11 @@
     })
 
     function onFilter(event): void {
-        console.log('filter called')
         const filterData = event.detail
 
         // TODO add exception handling
         ServerService.getUserServers({
-            title: filterData.name,
+            name: filterData.name,
             powerstatus: filterData.powerstatus
         }).then((filteredServers) => {
             console.log(servers)

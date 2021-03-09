@@ -1,9 +1,19 @@
+<script lang="ts">
+    export let cssClass: "large" | "default" = "default"
+</script>
+
 <style>
-    section {
+    section.default {
         margin: 0 auto;
         padding-top: 150px;
         height: 100vh;
         width: 40%;
+    }
+
+    section.large {
+        margin: 0 auto;
+        height: 100vh;
+        width: 60%;
     }
 
     @media screen and (max-width: 1000px) {
@@ -13,8 +23,6 @@
     }
 </style>
 
-<section>
-    <slot>
-
-    </slot>
+<section class={cssClass}>
+    <slot />
 </section>

@@ -1,6 +1,6 @@
 <script lang="ts">
     import {goto} from '@sapper/app';
-    import Button from "../../components/shared/Button.svelte";
+    import Button from "../../components/shared/buttons/Button.svelte";
     import type {User} from "../../models/user";
     import {Auth} from "../../services/auth/auth";
     import {FieldsErrors} from "../../services/error/fields.error";
@@ -8,7 +8,7 @@
     import AuthForm from "../../components/auth/AuthForm.svelte";
     import Container from "../../components/shared/Container.svelte";
     import ErrorList from "../../components/errors/ErrorList.svelte";
-    import Link from "../../components/shared/Link.svelte";
+    import Link from "../../components/shared/buttons/Link.svelte";
 
     let user: User = {
         email: '',
@@ -48,7 +48,9 @@
             <AuthForm on:value={(newUser) => user = newUser.detail}/>
         </div>
         <div>
-            <Button on:click={submitRegister} text="Register" />
+            <Button on:click={submitRegister}>
+                Register
+            </Button>
         </div>
     </form>
 </Container>

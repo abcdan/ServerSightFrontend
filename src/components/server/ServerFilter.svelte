@@ -1,6 +1,6 @@
 <script lang="ts">
     import Input from "../shared/Input.svelte";
-    import Toggler from "../shared/Toggler.svelte";
+    import Toggler from "../shared/buttons/Toggler.svelte";
     import {createEventDispatcher} from "svelte";
 
     const eventDispatcher = createEventDispatcher()

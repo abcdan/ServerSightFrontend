@@ -1,6 +1,6 @@
 export interface Server {
     id: string;
-    title: string;
+    name: string;
     description: string;
     powerStatus: boolean;
     createdAt: Date;

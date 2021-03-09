@@ -1,6 +1,6 @@
 <script lang="ts">
     import type {Server} from "../../models/server";
-    import Link from "../shared/Link.svelte";
+    import Link from "../shared/buttons/Link.svelte";
     import Img from "../shared/Img.svelte";
 
     export let server: Server
@@ -38,17 +38,18 @@
 <article>
     <div class="img">
         {#if server.imagePath}
-            <Img src={server.imagePath} alt={server.title} />
+            <Img src={server.imagePath} alt={server.name} />
         {:else}
             <!--TODO set default image-->
-            <Img src="no-image-available.png" alt={server.title} />
+            <Img src="no-image-available.png" alt={server.name} />
         {/if}
     </div>
-    <h1>{server.title}</h1>
+    <h1>{server.name}</h1>
+    <!--TODO add badge-->
     <span>Server power: {server.powerStatus ? 'on': 'off'}</span>
     <div>
         <Link href="/server/{server.id}">
-            <span>View {server.title} server</span>
+            <span>View {server.name} server</span>
         </Link>
     </div>
 </article>

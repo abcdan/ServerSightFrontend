@@ -10,7 +10,7 @@
         display: block;
         width: 100%;
         height: 40px;
-        background-color: #344966;
+        background-color: #BFCC94;
         color: #F0F4EF;
         text-align: center;
         border: none;
@@ -19,5 +19,5 @@
 </style>
 
 <a href={href}>
-    <slot></slot>
+    <slot />
 </a>

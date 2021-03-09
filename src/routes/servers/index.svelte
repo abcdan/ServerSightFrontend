@@ -3,7 +3,7 @@
     import {onMount} from "svelte";
     import ServerList from "../../components/server/ServerList.svelte";
     import ServerFilter from "../../components/server/ServerFilter.svelte";
-    import Link from "../../components/shared/Link.svelte";
+    import Link from "../../components/shared/buttons/Link.svelte";
 
     let servers = []
     onMount(async () => {
@@ -58,7 +58,6 @@
     }
 
     section.server-filter {
-        position: fixed;
         display: inline-block;
         border-right: 2px solid #344966;
         width: 25vw;

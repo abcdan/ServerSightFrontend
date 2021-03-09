@@ -1,9 +1,11 @@
 <script lang="ts">
-    export let text:string;
+    export let href: string
 </script>
 
 <style>
-    button {
+    a {
+        text-decoration: none;
+        vertical-align: middle;
         outline: none;
         display: block;
         width: 100%;
@@ -13,11 +15,9 @@
         text-align: center;
         border: none;
         border-radius: 5px;
-        padding: 0 !important;
-        margin: 0 !important;
     }
 </style>
 
-<button on:click>
-    { text }
-</button>
+<a href={href}>
+    <slot />
+</a>

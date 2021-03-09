@@ -43,6 +43,12 @@
         padding-left: 5px;
         padding-right: 5px;
     }
+
+    @media only screen and (max-width: 1200px) {
+        nav {
+            height: auto;
+        }
+    }
 </style>
 <nav>
     <!--  TODO add logo  -->

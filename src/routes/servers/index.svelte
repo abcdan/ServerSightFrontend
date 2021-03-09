@@ -52,8 +52,12 @@
     }
 
     div.container {
+        position: fixed;
+        top: 75px;
+        left: 0;
         width: 100%;
         min-height: 100%;
+        height: 100vh;
     }
 
     section.server-filter {
@@ -64,9 +68,32 @@
     }
     section.servers-list {
         display: inline-block;
-        width: calc(75vw - 60px);
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        overflow-y: scroll;
+        width: calc(75vw - 45px);
         float: right;
-        height: 100vh;
+        height: calc(100% - 290px);
+        padding-bottom: 200px;
+    }
+
+    @media only screen and (max-width: 1200px) {
+        section.server-filter {
+            height: auto;
+            position: relative;
+            top: 50px;
+        }
+
+        section.servers-list {
+            top: 50px;
+            position: relative;
+        }
+        section.servers-list, section.server-filter {
+            border: none;
+            display: block;
+            width: calc(100% - 20px);
+        }
     }
 </style>
 <svelte:head>

@@ -21,6 +21,16 @@
         right: 0;
         bottom: 0;
     }
+
+    @media only screen and (max-width: 1200px) {
+        div {
+            position: absolute;
+            top: 150px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+    }
 </style>
 <main>
     <Nav {segment} />

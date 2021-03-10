@@ -3,6 +3,7 @@
     import {goto} from "@sapper/app.mjs";
     import {onMount} from "svelte";
     import Nav from "../../components/Nav.svelte";
+    import Popup from "../../components/shared/Popup.svelte";
 
     export let segment;
     onMount(() => {
@@ -34,7 +35,9 @@
 </style>
 <main>
     <Nav {segment} />
+    <Popup />
     <div>
         <slot />
     </div>
 </main>
+

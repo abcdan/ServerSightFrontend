@@ -12,6 +12,8 @@
         createdAt: new Date(),
         imagePath: ''
     };
+
+    export let serverIcon:File;
 </script>
 
 <style>
@@ -28,6 +30,12 @@
     }
 
     div.editor {
+        width: 100%;
+        min-height: auto;
+    }
+
+    label, input {
+        display: block;
     }
 </style>
 
@@ -41,11 +49,17 @@
             placeholder="Name"
         />
     </div>
-    <div>
+    <div class="editor">
         <RichTextEditor bind:value={server.description}
             labelTxt="Description"
             placeholder="Enter your description / documentation for this server (with markdown support)."
         />
     </div>
     <!-- TODO add image upload button -->
+    <div>
+        <label>
+            Server icon:
+            <input type="file" accept="image/*" bind:files={serverIcon}>
+        </label>
+    </div>
 </form>

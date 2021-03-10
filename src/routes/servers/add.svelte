@@ -7,13 +7,21 @@
     import {FieldsErrors} from "../../services/error/fields.error";
     import {FieldError} from "../../services/error/field.error";
     import ErrorList from "../../components/errors/ErrorList.svelte";
+    import {popUpMessageStore} from "../../stores/popupMessages";
+    import {goto} from "@sapper/app";
 
     let server: Server
     let fieldsErrors: FieldError[] = []
 
+    let serverIcon: File
+    let serverCreated = true
+
     function saveServer() {
-        ServerService.saveSaver(server).then((savedServer) => {
-            // TODO display popup and go to server page
+        popUpMessageStore.addMessage('Saving new server. Please wait!')
+
+        ServerService.saveSaver(server, serverIcon[0]).then((savedServer) => {
+            popUpMessageStore.addMessage(`Added ${server.name}`)
+            goto('/servers', {});
         }).catch((err) => {
             if (err instanceof FieldsErrors) {
                 fieldsErrors = (err as FieldsErrors).fields
@@ -44,7 +52,10 @@
     </p>
     <div>
         <ErrorList fieldsErrors={fieldsErrors} />
-        <ServerForm bind:server={server} />
+        <ServerForm
+            bind:server={server}
+            bind:serverIcon={serverIcon}
+        />
     </div>
     <br>
     <Button on:click={saveServer}>Save</Button>

@@ -12,12 +12,21 @@ export class ServerService {
         return servers as Server[]
     }
 
-    static async saveSaver(server: Server): Promise<Server> {
+    static async saveSaver(server: Server, serverFile?: File): Promise<Server> {
         const response = await HttpClient.post('servers', server)
 
-        if(response.statusCode === 201) {
-            return response.content as Server
-        } else {
+        const createdServer = response.content as Server
+
+        if(response.statusCode === 200) {
+            if(serverFile) {
+                await HttpClient.uploadFile(
+                    `servers/image/${createdServer.id}`, "PUT", serverFile
+                )
+            }
+
+            return createdServer
+        }
+         else {
             throw httpResponseToLocalException(response)
         }
     }

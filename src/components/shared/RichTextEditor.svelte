@@ -14,6 +14,7 @@
     }
 
     div {
+        min-height: 200px;
     }
 
     textarea {

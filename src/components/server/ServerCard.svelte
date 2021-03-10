@@ -2,7 +2,7 @@
     import type {Server} from "../../models/server";
     import Link from "../shared/buttons/Link.svelte";
     import Img from "../shared/Img.svelte";
-
+    import {BASE_MEDIA_URL} from "../../configs";
     export let server: Server
 </script>
 
@@ -38,7 +38,7 @@
 <article>
     <div class="img">
         {#if server.imagePath}
-            <Img src={server.imagePath} alt={server.name} />
+            <Img src={ BASE_MEDIA_URL  + server.imagePath} alt={server.name} />
         {:else}
             <!--TODO set default image-->
             <Img src="no-image-available.png" alt={server.name} />

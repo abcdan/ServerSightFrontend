@@ -1,5 +1,7 @@
 <script>
     import SecondaryLink from "./shared/buttons/SecondaryLink.svelte";
+    import Img from "./shared/Img.svelte";
+
     export let segment;
 </script>
 
@@ -10,8 +12,6 @@
         top: 0;
         height: 75px;
         width: 100%;
-        /*padding-left: 10px;*/
-        /*padding-right: 10px;*/
         background-color: #344966;
     }
 
@@ -30,6 +30,11 @@
         float: left;
         margin-left: 10px;
         margin-right: 10px;
+    }
+
+    div.logo {
+        height: 100%;
+        margin: 0 !important;
     }
 
     div.logout {
@@ -52,6 +57,9 @@
 </style>
 <nav>
     <!--  TODO add logo  -->
+    <div class="pages logo">
+        <Img src="favicon.png" alt="server icon" />
+    </div>
     <div class="pages">
         <h1>Server sight dashboard</h1>
     </div>

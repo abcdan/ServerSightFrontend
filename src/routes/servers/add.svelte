@@ -5,9 +5,9 @@
     import Button from "../../components/shared/buttons/Button.svelte";
     import {ServerService} from "../../services/server/serverService";
     import {FieldsErrors} from "../../services/error/fields.error";
-    import {FieldError} from "../../services/error/field.error";
+    import type {FieldError} from "../../services/error/field.error";
     import ErrorList from "../../components/errors/ErrorList.svelte";
-    import {popUpMessageStore} from "../../stores/popupMessages";
+    import {popUpMessageStore} from "../../stores/popupMessagesStore";
     import {goto} from "@sapper/app";
 
     let server: Server
@@ -19,7 +19,7 @@
     function saveServer() {
         popUpMessageStore.addMessage('Saving new server. Please wait!')
 
-        ServerService.saveSaver(server, serverIcon[0]).then((savedServer) => {
+        ServerService.saveSaver(server, serverIcon ? serverIcon[0] : undefined).then((savedServer) => {
             popUpMessageStore.addMessage(`Added ${server.name}`)
             goto('/servers', {});
         }).catch((err) => {

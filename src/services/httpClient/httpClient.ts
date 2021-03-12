@@ -38,6 +38,27 @@ export class HttpClient {
         }
     }
 
+    static async put(relativeUrl: string, data: Object): Promise<HttpResponse> {
+        const response = await fetch(BASE_API_URL + relativeUrl, {
+            method: 'PUT',
+            headers: this._getHeaders(),
+            body: JSON.stringify(data)
+        })
+
+        try {
+            return {
+                statusCode: response.status,
+                content: (await response.json())
+            }
+        } catch (ignored) {
+            // if failed to parse json
+            return {
+                statusCode: response.status,
+                content: {}
+            }
+        }
+    }
+
     static async uploadFile(relativeUrl: string, httpMethod: "PUT" | "POST", file, params?: any) {
         const formData = new FormData();
         formData.append('file', file);

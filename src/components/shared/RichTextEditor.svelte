@@ -1,5 +1,6 @@
 <script>
     import marked from 'marked'
+    import MarkdownViewer from "./MarkdownViewer.svelte";
 
     export let placeholder = ""
     export let labelTxt = ""
@@ -51,6 +52,8 @@
     {#if !value}
         <span>Here will your rendered markdown appear. Start typing on the left</span>
     {:else}
-        <div class="preview">{@html marked(value)}</div>
+        <div class="preview">
+            <MarkdownViewer markdown={value} />
+        </div>
     {/if}
 </div>

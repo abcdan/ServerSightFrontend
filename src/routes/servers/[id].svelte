@@ -1,59 +1,80 @@
 <script lang="ts">
     import {onMount} from "svelte";
-    import {stores} from "@sapper/app";
+    import {goto, stores} from "@sapper/app";
     import {ServerService} from "../../services/server/serverService";
     import type {Server} from "../../models/server";
-    import {popUpMessageStore} from "../../stores/popupMessages";
+    import {popUpMessageStore} from "../../stores/popupMessagesStore";
     import Img from "../../components/shared/Img.svelte";
     import marked from "marked";
     import Container from "../../components/shared/Container.svelte";
     import Button from "../../components/shared/buttons/Button.svelte";
     import {BASE_MEDIA_URL} from "../../configs";
+    import ServerForm from "../../components/server/ServerForm.svelte";
+    import type {FieldError} from "../../services/error/field.error";
+    import ErrorList from "../../components/errors/ErrorList.svelte";
+    import {FieldsErrors} from "../../services/error/fields.error";
+    import MarkdownViewer from "../../components/shared/MarkdownViewer.svelte";
+
 
     const {page} = stores();
 
     const {id} = ($page as any).params;
 
     let server: Server = undefined
+    let serverIcon: any = undefined
+    let fieldsErrors: FieldError[] = []
+    let editMode: boolean = false
+
     onMount(() => {
         ServerService.getServer(id).then((fetchedServer) => {
             server = fetchedServer
         }).catch(() => {
             popUpMessageStore.addMessage("404 Server with id not found!")
         })
+
     })
+
+    function toggleEditMode(): void {
+        editMode = !editMode
+    }
+
+    function updateServer(): void {
+        ServerService.updateServer(server, serverIcon ? serverIcon[0] : undefined).then((savedServer) => {
+            popUpMessageStore.addMessage(`Updated ${server.name}`)
+            editMode = false
+        }).catch((err) => {
+            if (err instanceof FieldsErrors) {
+                fieldsErrors = (err as FieldsErrors).fields
+            }
+        })
+    }
 </script>
 
 <style>
-    div.icon {
+    div.icon, div.side-bar {
         display: inline-block;
-        width: 200px;
+        width: 175px;
+    }
+    div.main-content {
+        display: inline-block;
     }
 
-    div.header, h1 {
+    div.header {
         width: auto;
+        display: inline-block;
+        vertical-align: top;
         margin: 0;
         padding: 0;
     }
 
-    div.header {
-        display: inline-block;
-        height: 40px;
-    }
-
     h1 {
-        vertical-align: top;
-        height: 100%;
+        height: 40px;
     }
 
     div.inline {
         display: inline-block;
         vertical-align: bottom;
         width: 150px;
-    }
-
-    div.red :global(.style-in-parent) {
-        background-color: #721c24;
     }
 </style>
 
@@ -64,32 +85,43 @@
 </svelte:head>
 
 <Container cssClass="large">
-    <section>
-        {#if server}
-            <div>
-                <div class="icon">
-                    <Img src={ BASE_MEDIA_URL + server.imagePath } alt={server.name} />
+    {#if server}
+        <div>
+            <div class="icon">
+                <Img src={ BASE_MEDIA_URL + server.imagePath } alt={server.name} />
+            </div>
+            <div class="header">
+                <h1>{server.name}</h1>
+                <div class="inline">
+                    <Button>Create server key</Button>
                 </div>
-                <div class="header">
-                    <h1>{server.name}</h1>
-                    <div class="inline">
-                        <Button>Create server key</Button>
-                    </div>
-                    <div class="inline">
-                        <Button>Edit</Button>
-                    </div>
-                    <div class="inline red">
-                        <Button>Delete</Button>
-                    </div>
+                <div class="inline">
+                    <Button on:click={toggleEditMode}>{editMode ? 'Edit mode' : 'View mode' }</Button>
+                </div>
+                <div class="inline">
+                    <Button backgroundColor="#721c24">Delete</Button>
                 </div>
             </div>
+        </div>
+        <div class="side-bar">
 
-            <div>
-                <!-- seperate function -->
-                {@html marked(server.description)}
-            </div>
-        {:else}
-            <!--  TODO add loading thingie (also to server page)  -->
-        {/if}
-    </section>
+        </div>
+        <div class="main-content">
+            {#if editMode}
+                <div>
+                    <ErrorList fieldsErrors={fieldsErrors} />
+                    <ServerForm
+                        bind:server={server}
+                        bind:serverIcon={serverIcon}
+                    />
+                    <Button on:click={updateServer}>Save</Button>
+                </div>
+            {:else }
+                <h1>Server description:</h1>
+                <MarkdownViewer markdown={server.description} />
+            {/if}
+        </div>
+    {:else}
+        <!--  TODO add loading thingie (also to server page)  -->
+    {/if}
 </Container>

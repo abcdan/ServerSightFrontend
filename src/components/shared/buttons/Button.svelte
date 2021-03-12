@@ -1,3 +1,8 @@
+<script lang="ts">
+    export let color: string = '#F0F4EF';
+    export let backgroundColor: string = '#344966';
+</script>
+
 <style>
     button {
         outline: none;
@@ -18,6 +23,6 @@
     }
 </style>
 
-<button on:click>
+<button on:click style="color: {color}; background-color: {backgroundColor}">
     <slot />
 </button>

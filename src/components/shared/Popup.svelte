@@ -1,7 +1,7 @@
 <script lang="ts">
     import { slide } from 'svelte/transition';
 
-    import { popUpMessageStore } from "../../stores/popupMessages";
+    import { popUpMessageStore } from "../../stores/popupMessagesStore";
 
     let messages = []
 
@@ -44,10 +44,12 @@
     }
 </style>
 
-<section>
-    {#each messages as message}
-        <div transition:slide>
-            <b>{ message }</b>
-        </div>
-    {/each}
-</section>
+{#if messages.length > 0}
+    <section>
+        {#each messages as message}
+            <div transition:slide>
+                <b>{ message }</b>
+            </div>
+        {/each}
+    </section>
+{/if}

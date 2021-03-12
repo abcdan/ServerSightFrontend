@@ -38,7 +38,7 @@
 </svelte:head>
 
 <Container>
-    <h1>Server sight login</h1>
+    <h1>Login server sight</h1>
     <ErrorList fieldsErrors={fieldsErrors} />
     <form on:submit|preventDefault={submitLogin}>
         <div>

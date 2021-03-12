@@ -47,7 +47,7 @@
 {#if messages.length > 0}
     <section>
         {#each messages as message}
-            <div transition:slide>
+            <div transition:slide|local>
                 <b>{ message }</b>
             </div>
         {/each}

@@ -40,7 +40,7 @@
 </style>
 
 {#key value}
-    <button transition:slide={{x:50,duration:200}} class={cssClass} on:click|preventDefault={onToggle}>
+    <button transition:slide|local={{x:50,duration:200}} class={cssClass} on:click|preventDefault={onToggle}>
         <span>
             <slot />
         </span>

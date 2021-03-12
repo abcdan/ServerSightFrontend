@@ -5,7 +5,7 @@ const messagePopUpStore = writable([]);
 
 export const popUpMessageStore = {
     subscribe: messagePopUpStore.subscribe,
-    addRequest: (message: string) => {
+    addMessage: (message: string) => {
         messagePopUpStore.update((existingMessages) => {
             return [message, ...existingMessages]
         })

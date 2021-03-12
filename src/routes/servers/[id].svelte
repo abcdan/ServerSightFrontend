@@ -5,7 +5,6 @@
     import type {Server} from "../../models/server";
     import {popUpMessageStore} from "../../stores/popupMessagesStore";
     import Img from "../../components/shared/Img.svelte";
-    import marked from "marked";
     import Container from "../../components/shared/Container.svelte";
     import Button from "../../components/shared/buttons/Button.svelte";
     import {BASE_MEDIA_URL} from "../../configs";
@@ -57,6 +56,7 @@
     }
     div.main-content {
         display: inline-block;
+        width: 100%;
     }
 
     div.header {
@@ -104,7 +104,7 @@
             </div>
         </div>
         <div class="side-bar">
-
+            <!-- TODO fill-->
         </div>
         <div class="main-content">
             {#if editMode}

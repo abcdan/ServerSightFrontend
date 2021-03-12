@@ -36,11 +36,15 @@
 </style>
 
 <svelte:head>
-    <title>Login server sight</title>
+    <title>Register server sight</title>
 </svelte:head>
 
 <Container>
-    <h1>Register sight register</h1>
+    <h1>Register server sight</h1>
+    <p>
+        Server sight is an application where you can document your servers and get insights to them.
+        Register here to check it out!
+    </p>
     <Link href="auth/login">Already have an account?</Link>
     <ErrorList fieldsErrors={fieldsErrors} />
     <form on:submit|preventDefault={submitRegister}>

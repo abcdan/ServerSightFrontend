@@ -11,7 +11,7 @@ export class Auth {
      * @param user
      */
     static async login(user: User): Promise<void> {
-        const response = await HttpClient.post('user/login', user)
+        const response = await HttpClient.post('user/login', user, true)
 
         if(response.statusCode === 202) {
             Jwt.setJwt((response.content as any).token)
@@ -27,7 +27,7 @@ export class Auth {
      * @return nothing. Throws error if failed.
      */
     static async register(user: User): Promise<void> {
-        const response = await HttpClient.post('user/register', user)
+        const response = await HttpClient.post('user/register', user, true)
         console.log(response)
         if(response.statusCode === 200) {
             // stores auth token

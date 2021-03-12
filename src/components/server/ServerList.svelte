@@ -29,7 +29,7 @@
 
 <ol>
     {#each servers as server}
-        <li transition:fly={{ y: 100, duration: 500 }}>
+        <li transition:fly|local={{ y: 100, duration: 500 }}>
             <ServerCard
                 {server}
             />

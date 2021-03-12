@@ -33,7 +33,7 @@
     }
 
     div.logo {
-        height: 100%;
+        height: 75px;
         margin: 0 !important;
     }
 

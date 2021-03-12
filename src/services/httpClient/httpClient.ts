@@ -85,6 +85,30 @@ export class HttpClient {
         }
     }
 
+    static async delete(relativeUrl: string): Promise<HttpResponse> {
+        const response = await fetch(BASE_API_URL + relativeUrl, {
+            method: 'DELETE',
+            headers: this._getHeaders(),
+        })
+
+        try {
+            const httpResponse = {
+                statusCode: response.status,
+                content: (await response.json())
+            }
+            httpResponseStore.addResponse(httpResponse)
+            return httpResponse
+        } catch (ignored) {
+            // if failed to parse json
+            const httpResponse = {
+                statusCode: response.status,
+                content: {}
+            }
+            httpResponseStore.addResponse(httpResponse)
+            return httpResponse
+        }
+    }
+
     static async uploadFile(relativeUrl: string, httpMethod: "PUT" | "POST", file, params?: any) {
         const formData = new FormData();
         formData.append('file', file);

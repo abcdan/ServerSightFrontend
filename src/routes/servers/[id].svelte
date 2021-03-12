@@ -47,6 +47,15 @@
             }
         })
     }
+
+    function deleteServer(): void {
+        ServerService.deleteServer(server).then(() => {
+            popUpMessageStore.addMessage(`Deleted ${server.name}`)
+            goto('/servers', {}).then()
+        }).catch((ignored) => {
+            popUpMessageStore.addMessage('Failed to delete server')
+        })
+    }
 </script>
 
 <style>
@@ -88,7 +97,11 @@
     {#if server}
         <div>
             <div class="icon">
-                <Img src={ BASE_MEDIA_URL + server.imagePath } alt={server.name} />
+                {#if server.imagePath}
+                    <Img src={ BASE_MEDIA_URL + server.imagePath } alt={server.name} />
+                {:else }
+                    <Img src="no-server-image.svg" alt={server.name} />
+                {/if}
             </div>
             <div class="header">
                 <h1>{server.name}</h1>
@@ -99,7 +112,7 @@
                     <Button on:click={toggleEditMode}>{editMode ? 'Edit mode' : 'View mode' }</Button>
                 </div>
                 <div class="inline">
-                    <Button backgroundColor="#721c24">Delete</Button>
+                    <Button on:click={deleteServer} backgroundColor="#721c24">Delete</Button>
                 </div>
             </div>
         </div>

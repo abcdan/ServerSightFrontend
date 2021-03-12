@@ -40,8 +40,7 @@
         {#if server.imagePath}
             <Img src={ BASE_MEDIA_URL  + server.imagePath} alt={server.name} />
         {:else}
-            <!--TODO set default image-->
-            <Img src="no-image-available.png" alt={server.name} />
+            <Img src="no-server-image.svg" alt={server.name} />
         {/if}
     </div>
     <h1>{server.name}</h1>

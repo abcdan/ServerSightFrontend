@@ -57,4 +57,16 @@ export class ServerService {
             throw httpResponseToLocalException(response)
         }
     }
+
+    static async deleteServer(server: Server): Promise<void> {
+        const response = await HttpClient.delete(`servers/${server.id}`)
+
+        const createdServer = response.content as Server
+
+        if(response.statusCode === 204) {
+            return
+        } else {
+            throw httpResponseToLocalException(response)
+        }
+    }
 }

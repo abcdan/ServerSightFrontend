@@ -12,6 +12,7 @@
         padding: 0 !important;
         margin: 0 !important;
     }
+
     button:hover {
         cursor: pointer;
     }

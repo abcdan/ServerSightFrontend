@@ -1,6 +1,6 @@
 <script lang="ts">
     import {FieldsErrors} from "../../services/error/fields.error";
-    import Error from "../shared/Error.svelte";
+    import Error from "./Error.svelte";
 
     export let fieldsErrors: FieldsErrors[]
 </script>

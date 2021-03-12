@@ -16,6 +16,10 @@
         border: none;
         border-radius: 5px;
     }
+
+    a:hover {
+        cursor: pointer;
+    }
 </style>
 
 <a href={href}>

@@ -22,6 +22,10 @@
         border-radius: 1px;
     }
 
+    button:hover {
+        cursor: pointer;
+    }
+
     button.true {
         background-color: #344966;
     }

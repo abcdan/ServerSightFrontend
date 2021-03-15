@@ -25,12 +25,7 @@
     let editMode: boolean = false
 
     onMount(() => {
-        ServerService.getServer(id).then((fetchedServer) => {
-            server = fetchedServer
-        }).catch(() => {
-            popUpMessageStore.addMessage("404 Server with id not found!")
-        })
-
+        getAndSetServer()
     })
 
     function toggleEditMode(): void {
@@ -54,6 +49,14 @@
             goto('/servers', {}).then()
         }).catch((ignored) => {
             popUpMessageStore.addMessage('Failed to delete server')
+        })
+    }
+
+    function getAndSetServer(): void {
+        ServerService.getServer(id).then((fetchedServer) => {
+            server = fetchedServer
+        }).catch(() => {
+            popUpMessageStore.addMessage("404 Server with id not found!")
         })
     }
 </script>
@@ -105,9 +108,6 @@
             </div>
             <div class="header">
                 <h1>{server.name}</h1>
-                <div class="inline">
-                    <Button>Create server key</Button>
-                </div>
                 <div class="inline">
                     <Button on:click={toggleEditMode}>{editMode ? 'Edit mode' : 'View mode' }</Button>
                 </div>

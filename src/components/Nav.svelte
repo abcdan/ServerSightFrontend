@@ -68,6 +68,11 @@
             <span>Your servers</span>
         </SecondaryLink>
     </div>
+    <div class="pages">
+        <SecondaryLink href="/api/keys">
+            <span>Api key management</span>
+        </SecondaryLink>
+    </div>
     <div class="logout">
         <SecondaryLink href="/servers">
             <span>Logout</span>

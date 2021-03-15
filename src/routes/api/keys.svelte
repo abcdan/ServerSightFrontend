@@ -4,6 +4,7 @@
     import {ApiKeyService} from "../../services/apiKey/apiKeyService";
     import {popUpMessageStore} from "../../stores/popupMessagesStore";
     import Container from "../../components/shared/Container.svelte";
+    import {slide} from "svelte/transition";
 
     let apiKey: string = undefined
 
@@ -31,16 +32,22 @@
     }
 </script>
 
-
+<svelte:head>
+    <title>Api key management</title>
+</svelte:head>
 <Container>
     <h1>Api keys</h1>
     <p>
         Here you can manage your api keys that will be used on your servers.
     </p>
-    {#if apiKey}
-        <Button on:click={deleteKey} backgroundColor="#721c24">Delete API key</Button>
-        <p>API key: {apiKey} </p>
+    {#if !apiKey}
+        <div transition:slide|local>
+            <Button on:click={createKey}>Create API key</Button>
+        </div>
     {:else}
-        <Button on:click={createKey}>Create API key</Button>
+        <div transition:slide|local>
+            <p>API key: {apiKey} </p>
+            <Button on:click={deleteKey} backgroundColor="#721c24">Delete API key</Button>
+        </div>
     {/if}
 </Container>

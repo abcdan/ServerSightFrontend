@@ -33,9 +33,10 @@
     }
 
     function updateServer(): void {
-        ServerService.updateServer(server, serverIcon ? serverIcon[0] : undefined).then((savedServer) => {
+        ServerService.updateServer(server, serverIcon ? serverIcon[0] : undefined).then(() => {
             popUpMessageStore.addMessage(`Updated ${server.name}`)
             editMode = false
+            getAndSetServer()
         }).catch((err) => {
             if (err instanceof FieldsErrors) {
                 fieldsErrors = (err as FieldsErrors).fields
@@ -109,7 +110,7 @@
             <div class="header">
                 <h1>{server.name}</h1>
                 <div class="inline">
-                    <Button on:click={toggleEditMode}>{editMode ? 'Edit mode' : 'View mode' }</Button>
+                    <Button on:click={toggleEditMode}>{editMode ? 'View mode' : 'Edit mode' }</Button>
                 </div>
                 <div class="inline">
                     <Button on:click={deleteServer} backgroundColor="#721c24">Delete</Button>

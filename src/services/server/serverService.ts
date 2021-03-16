@@ -44,12 +44,10 @@ export class ServerService {
     static async updateServer(server: Server, serverFile?: File): Promise<void> {
         const response = await HttpClient.put(`servers/${server.id}`, server)
 
-        const createdServer = response.content as Server
-
         if(response.statusCode === 204) {
             if(serverFile) {
                 await HttpClient.uploadFile(
-                    `servers/image/${createdServer.id}`, "PUT", serverFile
+                    `servers/image/${server.id}`, "PUT", serverFile
                 )
             }
             return

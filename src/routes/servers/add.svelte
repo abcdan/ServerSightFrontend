@@ -1,7 +1,7 @@
 <script lang="ts">
     import Container from "../../components/shared/Container.svelte";
     import ServerForm from "../../components/server/ServerForm.svelte";
-    import type {Server} from "../../models/server";
+    import type {Server} from "../../models/server/server";
     import Button from "../../components/shared/buttons/Button.svelte";
     import {ServerService} from "../../services/server/serverService";
     import {FieldsErrors} from "../../services/error/fields.error";

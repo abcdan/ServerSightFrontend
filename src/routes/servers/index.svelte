@@ -4,6 +4,7 @@
     import ServerList from "../../components/server/ServerList.svelte";
     import ServerFilter from "../../components/server/ServerFilter.svelte";
     import Link from "../../components/shared/buttons/Link.svelte";
+    import LoadingSpinner from "../../components/shared/LoadingSpinner.svelte";
 
     let servers = []
     onMount(async () => {
@@ -66,6 +67,7 @@
         width: 25vw;
         height: 100vh;
     }
+
     section.servers-list {
         display: inline-block;
         position: absolute;
@@ -76,6 +78,12 @@
         float: right;
         height: calc(100% - 290px);
         padding-bottom: 200px;
+    }
+
+    div.loading-spinner-container {
+        margin: 0 auto;
+        text-align: center;
+        width: 100%;
     }
 
     @media only screen and (max-width: 1200px) {
@@ -123,7 +131,12 @@
                 </span>
             </Link>
         </div>
-        <!--TODO add loading spinner-->
-        <ServerList {servers} />
+        {#if servers}
+            <ServerList {servers} />
+        {:else }
+            <div class="loading-spinner-container">
+                <LoadingSpinner />
+            </div>
+        {/if}
     </section>
 </div>

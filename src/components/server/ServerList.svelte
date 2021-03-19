@@ -1,6 +1,6 @@
 <script lang="ts">
     import { fly } from 'svelte/transition';
-    import type {Server} from "../../models/server";
+    import type {Server} from "../../models/server/server";
     import ServerCard from "./ServerCard.svelte";
 
     export let servers: Server[] = [];

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type {Server} from "../../models/server";
+    import type {Server} from "../../models/server/server";
     import Link from "../shared/buttons/Link.svelte";
     import Img from "../shared/Img.svelte";
     import {BASE_MEDIA_URL} from "../../configs";

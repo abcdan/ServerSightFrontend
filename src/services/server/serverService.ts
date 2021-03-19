@@ -1,4 +1,4 @@
-import type {Server} from "../../models/server";
+import type {Server} from "../../models/server/server";
 import {HttpClient} from "../httpClient/httpClient";
 import {Jwt} from "../auth/jwt";
 import {httpResponseToLocalException} from "../httpClient/httpExceptionHandler";

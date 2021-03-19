@@ -2,7 +2,7 @@
     import {onMount} from "svelte";
     import {goto, stores} from "@sapper/app";
     import {ServerService} from "../../services/server/serverService";
-    import type {Server} from "../../models/server";
+    import type {Server} from "../../models/server/server";
     import {popUpMessageStore} from "../../stores/popupMessagesStore";
     import Img from "../../components/shared/Img.svelte";
     import Container from "../../components/shared/Container.svelte";
@@ -13,6 +13,10 @@
     import ErrorList from "../../components/errors/ErrorList.svelte";
     import {FieldsErrors} from "../../services/error/fields.error";
     import MarkdownViewer from "../../components/shared/MarkdownViewer.svelte";
+    import {ServerNetworkAdapterService} from "../../services/server/serverNetworkAdapterService";
+    import type {NetworkAdapterServer} from "../../models/server/networkAdapter";
+    import NetworkAdapterList from "../../components/server/network-adapter/NetworkAdapterList.svelte";
+    import LoadingSpinner from "../../components/shared/LoadingSpinner.svelte";
 
 
     const {page} = stores();
@@ -21,8 +25,11 @@
 
     let server: Server = undefined
     let serverIcon: any = undefined
+
     let fieldsErrors: FieldError[] = []
     let editMode: boolean = false
+
+    let networkAdapters: NetworkAdapterServer[] = []
 
     onMount(() => {
         getAndSetServer()
@@ -56,8 +63,17 @@
     function getAndSetServer(): void {
         ServerService.getServer(id).then((fetchedServer) => {
             server = fetchedServer
+            _getAndSetNetworkAdapters()
         }).catch(() => {
             popUpMessageStore.addMessage("404 Server with id not found!")
+        })
+    }
+
+    function _getAndSetNetworkAdapters(): void {
+        ServerNetworkAdapterService.getNetworkAdaptersOfServer(server).then((networkAdaptersServer) => {
+            networkAdapters = networkAdaptersServer
+        }).catch((err) => {
+            popUpMessageStore.addMessage("Could not fetch network adapters of server")
         })
     }
 </script>
@@ -65,11 +81,12 @@
 <style>
     div.icon, div.side-bar {
         display: inline-block;
-        width: 175px;
+        width: 250px;
     }
     div.main-content {
         display: inline-block;
-        width: 100%;
+        vertical-align: top;
+        width: 70%;
     }
 
     div.header {
@@ -80,8 +97,9 @@
         padding: 0;
     }
 
-    h1 {
+    h3 {
         height: 40px;
+        font-weight: bold;
     }
 
     div.inline {
@@ -118,7 +136,8 @@
             </div>
         </div>
         <div class="side-bar">
-            <!-- TODO fill-->
+            <h3>Network adapters of server</h3>
+            <NetworkAdapterList {networkAdapters} />
         </div>
         <div class="main-content">
             {#if editMode}
@@ -131,11 +150,12 @@
                     <Button on:click={updateServer}>Save</Button>
                 </div>
             {:else }
-                <h1>Server description:</h1>
+                <h3>Server description:</h3>
                 <MarkdownViewer markdown={server.description} />
             {/if}
         </div>
     {:else}
         <!--  TODO add loading thingie (also to server page)  -->
+        <LoadingSpinner />
     {/if}
 </Container>

@@ -1,6 +1,6 @@
 <script lang="ts">
     import Input from "../shared/Input.svelte";
-    import type {Server} from "../../models/server";
+    import type {Server} from "../../models/server/server";
     import RichTextEditor from "../shared/RichTextEditor.svelte";
     import Button from "../shared/buttons/Button.svelte";
 

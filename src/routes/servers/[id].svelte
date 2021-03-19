@@ -17,6 +17,8 @@
     import type {NetworkAdapterServer} from "../../models/server/networkAdapter";
     import NetworkAdapterList from "../../components/server/network-adapter/NetworkAdapterList.svelte";
     import LoadingSpinner from "../../components/shared/LoadingSpinner.svelte";
+    import {ServerHardDiskService} from "../../services/server/serverHardDiskService";
+    import {HardDiskServer} from "../../models/server/hardDisk";
 
 
     const {page} = stores();
@@ -30,6 +32,7 @@
     let editMode: boolean = false
 
     let networkAdapters: NetworkAdapterServer[] = []
+    let hardDisks: HardDiskServer[] = []
 
     onMount(() => {
         getAndSetServer()
@@ -76,6 +79,14 @@
             popUpMessageStore.addMessage("Could not fetch network adapters of server")
         })
     }
+
+    function _getAndSetHardDisks(): void {
+        ServerHardDiskService.getHardDisksOfServer(server).then((hardDisksOfServers) => {
+            hardDisks = hardDisksOfServers
+        }).catch((err) => {
+            popUpMessageStore.addMessage("Could not fetch the hard disks of this server")
+        })
+    }
 </script>
 
 <style>
@@ -87,6 +98,18 @@
         display: inline-block;
         vertical-align: top;
         width: 70%;
+    }
+
+    details {
+        position: relative;
+        box-shadow: 0 1px 1px 0 rgb(52, 73, 102),0 3px 1px -2px rgb(52, 73, 102),0 1px 5px 0 rgba(0,0,0,0.2);
+        border-radius: 5px;
+        text-align: left;
+        padding: 5px;
+        margin-right: 5px;
+    }
+    summary {
+        font-weight: bold;
     }
 
     div.header {
@@ -136,8 +159,10 @@
             </div>
         </div>
         <div class="side-bar">
-            <h3>Network adapters of server</h3>
-            <NetworkAdapterList {networkAdapters} />
+            <details>
+                <summary>Network adapters of server</summary>
+                <NetworkAdapterList {networkAdapters} />
+            </details>
         </div>
         <div class="main-content">
             {#if editMode}
@@ -155,7 +180,6 @@
             {/if}
         </div>
     {:else}
-        <!--  TODO add loading thingie (also to server page)  -->
         <LoadingSpinner />
     {/if}
 </Container>

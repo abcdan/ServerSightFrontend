@@ -20,6 +20,9 @@
     import {ServerHardDiskService} from "../../services/server/serverHardDiskService";
     import type {HardDiskServer} from "../../models/server/hardDisk";
     import HardDiskList from "../../components/server/hard-disks/HardDiskList.svelte";
+    import type {PortServer} from "../../models/server/port";
+    import {ServerPortService} from "../../services/server/serverPortService";
+    import PortList from "../../components/server/ports/PortList.svelte";
 
 
     const {page} = stores();
@@ -32,8 +35,10 @@
     let fieldsErrors: FieldError[] = []
     let editMode: boolean = false
 
+    // all properties of a single server
     let networkAdapters: NetworkAdapterServer[] = []
     let hardDisks: HardDiskServer[] = []
+    let ports: PortServer[] = []
 
     onMount(() => {
         getAndSetServer()
@@ -67,8 +72,10 @@
     function getAndSetServer(): void {
         ServerService.getServer(id).then((fetchedServer) => {
             server = fetchedServer
+
             _getAndSetNetworkAdapters()
             _getAndSetHardDisks()
+            _getAndSetPorts()
         }).catch(() => {
             popUpMessageStore.addMessage("404 Server with id not found!")
         })
@@ -85,9 +92,17 @@
     function _getAndSetHardDisks(): void {
         ServerHardDiskService.getHardDisksOfServer(server).then((hardDisksOfServers) => {
             hardDisks = hardDisksOfServers
-            console.log(hardDisks)
         }).catch((err) => {
             popUpMessageStore.addMessage('Could not fetch the hard disks of this server')
+        })
+    }
+
+    function _getAndSetPorts(): void {
+        ServerPortService.getPortsOfServer(server).then((portsOfServer) => {
+            console.log(portsOfServer)
+            ports = portsOfServer
+        }).catch((err) => {
+            popUpMessageStore.addMessage('Could not fetch the ports of this server')
         })
     }
 </script>
@@ -167,8 +182,12 @@
                 <NetworkAdapterList {networkAdapters} />
             </details>
             <details>
-                <summary>Hard disks of server</summary>
+                <summary>Open server ports</summary>
                 <HardDiskList {hardDisks} />
+            </details>
+            <details>
+                <summary>Hard disks of server</summary>
+                <PortList {ports} />
             </details>
         </div>
         <div class="main-content">

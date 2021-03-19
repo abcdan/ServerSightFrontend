@@ -5,22 +5,28 @@
     import ServerFilter from "../../components/server/ServerFilter.svelte";
     import Link from "../../components/shared/buttons/Link.svelte";
     import LoadingSpinner from "../../components/shared/LoadingSpinner.svelte";
+    import {popUpMessageStore} from "../../stores/popupMessagesStore";
+    import type {Server} from "../../models/server/server";
 
-    let servers = []
-    onMount(async () => {
-        servers = await ServerService.getUserServers()
+    let servers: Server[] = []
+    let serversFetchingPromise;
+
+    onMount(() => {
+        getAllServers()
     })
+
+    function getAllServers(): void {
+        serversFetchingPromise = ServerService.getUserServers()
+    }
 
     function onFilter(event): void {
         const filterData = event.detail
 
         // TODO add exception handling
-        ServerService.getUserServers({
+        // TODO make loading spinner working
+        serversFetchingPromise = ServerService.getUserServers({
             name: filterData.name,
             powerstatus: filterData.powerstatus
-        }).then((filteredServers) => {
-            console.log(servers)
-            servers = filteredServers
         })
     }
 </script>
@@ -131,12 +137,17 @@
                 </span>
             </Link>
         </div>
-        {#if servers}
-            <ServerList {servers} />
-        {:else }
+        {#await serversFetchingPromise}
             <div class="loading-spinner-container">
                 <LoadingSpinner />
             </div>
+        {:then fetchedServers }
+            <ServerList servers={fetchedServers} />
+        {:catch error}
+            <p>Failed to fetch servers. Please try again later!</p>
+        {/await}
+        {#if servers.length === 0}
+            You have no servers yet. Start by creating one.
         {/if}
     </section>
 </div>

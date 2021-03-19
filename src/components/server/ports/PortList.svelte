@@ -3,10 +3,13 @@
     import Port from "./Port.svelte";
 
     export let ports: PortServer[]
+
+    let sortedPorts: PortServer[] = []
+    $: sortedPorts = ports.sort((p1:PortServer, p2:PortServer) => p1.port < p2.port ? -1: 1)
 </script>
 
 <ol>
-    {#each ports as port}
+    {#each sortedPorts as port}
         <li>
             <Port {port} />
         </li>

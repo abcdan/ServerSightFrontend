@@ -11,7 +11,6 @@
 
     // remove last message every 3 seconds
     setInterval(() => {
-        // console.log(messages.length - 1)
         popUpMessageStore.removeMessage(messages.length - 1)
     }, 5000)
 </script>

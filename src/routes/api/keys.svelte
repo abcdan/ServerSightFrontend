@@ -10,7 +10,6 @@
 
     onMount(() => {
         ApiKeyService.getKey().then((key) => {
-            console.log(key)
             apiKey = key
         }).catch((ignored) => {
             // TODO handle

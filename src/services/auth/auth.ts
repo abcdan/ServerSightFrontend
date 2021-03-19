@@ -28,7 +28,7 @@ export class Auth {
      */
     static async register(user: User): Promise<void> {
         const response = await HttpClient.post('user/register', user, true)
-        console.log(response)
+
         if(response.statusCode === 200) {
             // stores auth token
             await this.login(user)

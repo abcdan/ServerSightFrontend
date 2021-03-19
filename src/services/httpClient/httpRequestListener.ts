@@ -10,7 +10,6 @@ export function setup() {
     // for example redirect to the login/register page when signed out.
 
     httpResponseStore.subscribe((response: HttpResponse) => {
-        console.log(response)
         if(response) {
             onEveryRequest(response)
             switch (response.statusCode){
@@ -26,7 +25,6 @@ function onEveryRequest(response: HttpResponse): void {
     if(response.statusCode !== 401) {
         // get a new jwt every request to keep it fresh.
         HttpClient.get('user/refresh-jwt',{},  true).then((response) => {
-            console.log(response)
             if(response.statusCode === 401) on401(response)
             Jwt.setJwt((response.content as any).token)
         })
@@ -34,7 +32,6 @@ function onEveryRequest(response: HttpResponse): void {
 }
 
 function on401(response: HttpResponse): void {
-    console.log(response)
     goto("/auth/register", {}).then(() => {
         popUpMessageStore.addMessage('Unauthorized you need to login or register')
     })

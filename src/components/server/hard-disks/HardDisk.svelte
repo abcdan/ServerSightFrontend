@@ -3,8 +3,9 @@
 
     export let hardDisk: HardDiskServer
 
-    let percentageAvailable: number = 0
-    $: percentageAvailable = hardDisk.spaceAvailable / hardDisk.spaceTotal
+    let percentageAvailable = 0
+    $: percentageAvailable = isNaN(hardDisk.spaceAvailable / hardDisk.spaceTotal)
+        ? 0 : hardDisk.spaceAvailable / hardDisk.spaceTotal
 </script>
 
 <style>

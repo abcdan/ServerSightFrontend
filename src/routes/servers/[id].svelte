@@ -99,7 +99,6 @@
 
     function _getAndSetPorts(): void {
         ServerPortService.getPortsOfServer(server).then((portsOfServer) => {
-            console.log(portsOfServer)
             ports = portsOfServer
         }).catch((err) => {
             popUpMessageStore.addMessage('Could not fetch the ports of this server')
@@ -182,11 +181,11 @@
                 <NetworkAdapterList {networkAdapters} />
             </details>
             <details>
-                <summary>Open server ports</summary>
+                <summary>Hard disks of server</summary>
                 <HardDiskList {hardDisks} />
             </details>
             <details>
-                <summary>Hard disks of server</summary>
+                <summary>Open server ports</summary>
                 <PortList {ports} />
             </details>
         </div>

@@ -18,7 +18,8 @@
     import NetworkAdapterList from "../../components/server/network-adapter/NetworkAdapterList.svelte";
     import LoadingSpinner from "../../components/shared/LoadingSpinner.svelte";
     import {ServerHardDiskService} from "../../services/server/serverHardDiskService";
-    import {HardDiskServer} from "../../models/server/hardDisk";
+    import type {HardDiskServer} from "../../models/server/hardDisk";
+    import HardDiskList from "../../components/server/hard-disks/HardDiskList.svelte";
 
 
     const {page} = stores();
@@ -67,6 +68,7 @@
         ServerService.getServer(id).then((fetchedServer) => {
             server = fetchedServer
             _getAndSetNetworkAdapters()
+            _getAndSetHardDisks()
         }).catch(() => {
             popUpMessageStore.addMessage("404 Server with id not found!")
         })
@@ -76,15 +78,16 @@
         ServerNetworkAdapterService.getNetworkAdaptersOfServer(server).then((networkAdaptersServer) => {
             networkAdapters = networkAdaptersServer
         }).catch((err) => {
-            popUpMessageStore.addMessage("Could not fetch network adapters of server")
+            popUpMessageStore.addMessage('Could not fetch network adapters of server')
         })
     }
 
     function _getAndSetHardDisks(): void {
         ServerHardDiskService.getHardDisksOfServer(server).then((hardDisksOfServers) => {
             hardDisks = hardDisksOfServers
+            console.log(hardDisks)
         }).catch((err) => {
-            popUpMessageStore.addMessage("Could not fetch the hard disks of this server")
+            popUpMessageStore.addMessage('Could not fetch the hard disks of this server')
         })
     }
 </script>
@@ -162,6 +165,10 @@
             <details>
                 <summary>Network adapters of server</summary>
                 <NetworkAdapterList {networkAdapters} />
+            </details>
+            <details>
+                <summary>Hard disks of server</summary>
+                <HardDiskList {hardDisks} />
             </details>
         </div>
         <div class="main-content">

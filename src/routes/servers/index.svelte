@@ -5,7 +5,6 @@
     import ServerFilter from "../../components/server/ServerFilter.svelte";
     import Link from "../../components/shared/buttons/Link.svelte";
     import LoadingSpinner from "../../components/shared/LoadingSpinner.svelte";
-    import {popUpMessageStore} from "../../stores/popupMessagesStore";
     import type {Server} from "../../models/server/server";
 
     let servers: Server[] = []
@@ -16,7 +15,7 @@
     })
 
     function getAllServers(): void {
-        serversFetchingPromise = ServerService.getUserServers()
+        serversFetchingPromise = ServerService.getUserServers().then((serversFetched) => servers = serversFetched)
     }
 
     function onFilter(event): void {
@@ -141,13 +140,12 @@
             <div class="loading-spinner-container">
                 <LoadingSpinner />
             </div>
-        {:then fetchedServers }
-            <ServerList servers={fetchedServers} />
         {:catch error}
             <p>Failed to fetch servers. Please try again later!</p>
         {/await}
-        {#if servers.length === 0}
+        {#if serversFetchingPromise && servers.length === 0}
             You have no servers yet. Start by creating one.
         {/if}
+        <ServerList {servers} />
     </section>
 </div>

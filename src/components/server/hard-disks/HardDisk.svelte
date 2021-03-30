@@ -17,7 +17,7 @@
 </style>
 
 <span>
-    Diskname name: {hardDisk.diskName}
+    Disk name: {hardDisk.diskName}
 </span>
 <br>
 <span>
@@ -25,4 +25,7 @@
     <progress value={percentageAvailable}>
         <strong>Space available {percentageAvailable} </strong>
     </progress>
+    <!--  TODO set amount of usage here  -->
+    <span></span>
+
 </span>

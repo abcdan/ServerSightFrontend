@@ -2,8 +2,14 @@
     import { fly } from 'svelte/transition';
     import type {Server} from "../../models/server/server";
     import ServerCard from "./ServerCard.svelte";
+    import {onMount} from "svelte";
 
     export let servers: Server[] = [];
+
+    let ready = false;
+    onMount(() => {
+        ready = true;
+    })
 </script>
 
 <style>
@@ -28,11 +34,13 @@
 </style>
 
 <ol>
-    {#each servers as server}
-        <li transition:fly|local={{ y: 100, duration: 500 }}>
-            <ServerCard
-                {server}
-            />
-        </li>
-    {/each}
+    {#key ready}
+        {#each servers as server}
+                <li transition:fly|local={{ y: 100, duration: 500 }}>
+                    <ServerCard
+                        {server}
+                    />
+                </li>
+        {/each}
+    {/key}
 </ol>

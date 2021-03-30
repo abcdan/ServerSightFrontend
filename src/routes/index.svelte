@@ -1,3 +1,5 @@
 <script>
-	// setup login redirect etc
+    import {goto} from "@sapper/app.mjs";
+
+    goto('/servers', {})
 </script>

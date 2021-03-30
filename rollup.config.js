@@ -45,7 +45,7 @@ export default {
 				publicPath: '/client/'
 			}),
 			resolve({
-				browser: true,
+				browser: false,
 				dedupe: ['svelte']
 			}),
 			commonjs(),

@@ -31,7 +31,15 @@
     }
 
     function getAndSetCpuUsage(): void {
-        ServerCpuUsageService.getCpuUsageOfServer(server).then((cpuUsages) => {
+        // TODO let the user select it dynamically ()
+        // get from past 5 minutes
+        let fromDate: Date = new Date()
+        fromDate.setMinutes(fromDate.getMinutes() - 5)
+
+        ServerCpuUsageService.getCpuUsageOfServer(server, {
+            from: fromDate,
+            to: new Date()
+        }).then((cpuUsages) => {
             // TODO replace with promise
             cpuUsageOfServer = cpuUsages
             console.log(cpuUsages)

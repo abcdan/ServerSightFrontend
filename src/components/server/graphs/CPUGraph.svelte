@@ -8,13 +8,12 @@
     // TODO move to its own component
     let chartData
     $: chartData = {
-        labels: cpuUsages.map((usage) => usage.createdAt),
+        labels: cpuUsages.map((usage) => usage.createdAt.toLocaleString()),
+        yMarkers: [{ label: "CPU Usage%", value: 100 }],
         datasets: [
             {
                 name: "Cpu usage",
                 values: cpuUsages.map((usage) => usage.averageCpuUsagePastMinute),
-                // start: getStartDate(),
-                // end: getEndDate()
                 barOptions: {
                     max: 100
                 }
@@ -24,7 +23,7 @@
 
     function getStartDate() {
         try {
-            return cpuUsages[0].createdAt
+            return new Date(cpuUsages[0].createdAt)
         } catch (ignored) {
             return Date()
         }
@@ -32,7 +31,7 @@
 
     function getEndDate() {
         try {
-            cpuUsages[cpuUsages.length - 1].createdAt
+            return new Date(cpuUsages[cpuUsages.length - 1].createdAt)
         } catch (ignored) {
             return Date()
         }

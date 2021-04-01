@@ -7,6 +7,7 @@
     import {ServerCpuUsageService} from "../../../services/server/serverCpuUsageService";
     import type {CpuUsage} from "../../../models/server/cpuUsage";
     import CPUGraph from "../../../components/server/graphs/CPUGraph.svelte";
+    import Button from "../../../components/shared/buttons/Button.svelte";
 
     // getting server-id
     const {page} = stores();
@@ -24,28 +25,84 @@
     function getAndSetServer(): void {
         ServerService.getServer(id).then((fetchedServer) => {
             server = fetchedServer
-            getAndSetCpuUsage()
+            getAndSetCpuUsage(5)
         }).catch(() => {
             popUpMessageStore.addMessage("404 Server with id not found!")
         })
     }
 
-    function getAndSetCpuUsage(): void {
-        // TODO let the user select it dynamically ()
+    function getAndSetCpuUsage(minutesBackWordsToFetch:number): void {
         // get from past 5 minutes
-        let fromDate: Date = new Date()
-        fromDate.setMinutes(fromDate.getMinutes() - 5)
+        // let fromDate: Date = new Date()
+        // fromDate.setMinutes(fromDate.getMinutes() - minutesBackWordsToFetch)
 
+        // TODO replace
+        let fromDate: Date = new Date('2021-04-01T15:32:23.224')
+        let toDate: Date = new Date()
+        minutesBackWordsToFetch = 120
         ServerCpuUsageService.getCpuUsageOfServer(server, {
             from: fromDate,
-            to: new Date()
+            to: toDate
         }).then((cpuUsages) => {
-            // TODO replace with promise
-            cpuUsageOfServer = cpuUsages
             console.log(cpuUsages)
-        }).catch(() => {
+            if(cpuUsages.length === 0) {
+                popUpMessageStore.addMessage("There are no cpu usages of the past 5 minutes.")
+            } else {
+                // TODO replace with promise
+                cpuUsageOfServer = fillEmptyTimestamps(cpuUsages, minutesBackWordsToFetch, fromDate, toDate)
+            }
+        }).catch((ex) => {
             popUpMessageStore.addMessage("Could not fetch cpu usages.")
+            throw ex
         })
+    }
+
+    // Will fill a cpu usage if there is a CPU usage missing from a given minute.
+    // For example you want to fetch the last 30 minutes but there are only 28 cpu usages.
+    // this method will then fill these 2 so that there is a cpu usage of every minute.
+    function fillEmptyTimestamps(cpuUsages: CpuUsage[], totalAmount: number, startDate: Date, endDate: Date): CpuUsage[] {
+        // we got them all.
+        if(totalAmount === cpuUsages.length) {
+            return cpuUsages
+        }
+
+        const newCpUsagesList: CpuUsage[] = []
+
+        let previousCpuUsage: CpuUsage = cpuUsages[0]
+        for (let i = 1; i < totalAmount; i++) {
+            const dateToFill = new Date(previousCpuUsage.createdAt)
+            dateToFill.setMinutes(previousCpuUsage.createdAt.getMinutes() + 1)
+
+            if(cpuUsages[i] === undefined) {
+                newCpUsagesList.push({
+                    averageCpuUsagePastMinute: 0,
+                    createdAt: dateToFill
+                })
+                continue
+            }
+            let cpuUsage = cpuUsages[i]
+            newCpUsagesList.push(cpuUsage)
+
+            const minuteDifference = _getDifferenceInMinutes(cpuUsage.createdAt, previousCpuUsage.createdAt);
+
+            // if there is a minute difference it means there is a difference
+            if(minuteDifference > 1) {
+                newCpUsagesList.push({
+                    averageCpuUsagePastMinute: 0,
+                    createdAt: dateToFill
+                })
+            }
+            previousCpuUsage = cpuUsage
+        }
+
+        return newCpUsagesList
+    }
+
+    function _getDifferenceInMinutes(startDate: Date, endDate: Date): number {
+        let diffMs = (startDate - endDate); // milliseconds between now & Christmas
+
+         // minutes
+        return Math.round(((diffMs % 86400000) % 3600000) / 60000)
     }
 </script>
 
@@ -58,4 +115,14 @@
 <!--Will else render server sided and fail-->
 {#if ready}
     <CPUGraph cpuUsages={cpuUsageOfServer} />
+    <!--  TODO improve  -->
+    <Button on:click={() => getAndSetCpuUsage(5)}>
+        Past 5 minutes
+    </Button>
+    <Button on:click={() => getAndSetCpuUsage(30)}>
+        Past 30 minutes
+    </Button>
+    <Button on:click={() => getAndSetCpuUsage(720)}>
+        Past day
+    </Button>
 {/if}

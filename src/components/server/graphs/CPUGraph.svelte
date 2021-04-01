@@ -9,7 +9,11 @@
     let chartData
     $: chartData = {
         labels: cpuUsages.map((usage) => usage.createdAt.toLocaleString()),
-        yMarkers: [{ label: "CPU Usage%", value: 100 }],
+        yMarkers: [
+            {
+                label: "CPU Usage%", value: 100
+            }
+        ],
         datasets: [
             {
                 name: "Cpu usage",
@@ -20,24 +24,6 @@
             }
         ]
     };
-
-    function getStartDate() {
-        try {
-            return new Date(cpuUsages[0].createdAt)
-        } catch (ignored) {
-            return Date()
-        }
-    }
-
-    function getEndDate() {
-        try {
-            return new Date(cpuUsages[cpuUsages.length - 1].createdAt)
-        } catch (ignored) {
-            return Date()
-        }
-    }
-
-    $: console.log(chartData)
 </script>
 
 

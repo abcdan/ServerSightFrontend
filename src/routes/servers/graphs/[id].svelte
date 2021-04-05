@@ -4,7 +4,6 @@
     import {popUpMessageStore} from "../../../stores/popupMessagesStore";
     import type {Server} from "../../../models/server/server";
     import {stores} from "@sapper/app";
-    import type {CpuUsage} from "../../../models/server/cpuUsage";
     import CPUUsageGraph from "../../../components/server/graphs/cpu/CPUUsageGraph.svelte";
     import RAMUsageGraph from "../../../components/server/graphs/ram/RAMUsageGraph.svelte";
     import ServerNavBar from "../../../components/server/ServerNavBar.svelte";
@@ -31,7 +30,7 @@
 </script>
 
 <style>
-    section.main {
+    section.container {
         padding-right: 25px;
         padding-left: 25px;
     }
@@ -53,8 +52,8 @@
 
 <!--Will else render server sided and fail-->
 {#if ready && server}
-    <ServerNavBar {server} />
-    <section class="main">
+    <section class="container">
+        <ServerNavBar {server} />
         <header>
             <h1>Graphs of {server.name} server</h1>
         </header>

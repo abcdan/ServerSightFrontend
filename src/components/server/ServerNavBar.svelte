@@ -15,11 +15,16 @@
         margin: 0 !important;;
         padding: 0 !important;;
     }
-    ul li {
+    ul {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    li {
         display: inline;
         text-align: center;
         margin: 0 !important;
-        padding: 0 !important;;
+        padding: 0 !important;
     }
 
     a {

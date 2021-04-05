@@ -108,14 +108,25 @@
 </script>
 
 <style>
+    section.container {
+        padding-right: 25px;
+        padding-left: 25px;
+    }
+
     div.icon, div.side-bar {
         display: inline-block;
-        width: 250px;
+        width: 20%;
     }
+
+    div.icon {
+        position: relative;
+        height: 100px;
+    }
+
     div.main-content {
         display: inline-block;
         vertical-align: top;
-        width: 70%;
+        width: 79%;
     }
 
     details {
@@ -157,7 +168,7 @@
     {/if}
 </svelte:head>
 
-<Container cssClass="large">
+<section class="container">
     {#if server}
         <ServerNavBar {server} />
         <div>
@@ -171,7 +182,7 @@
             <div class="header">
                 <h1>{server.name}</h1>
                 <div class="inline">
-                    <Button on:click={toggleEditMode}>{editMode ? 'View mode' : 'Edit mode' }</Button>
+                    <Button on:click={toggleEditMode}>{editMode ? 'View' : 'Edit' }</Button>
                 </div>
                 <div class="inline">
                     <Button on:click={deleteServer} backgroundColor="#721c24">Delete</Button>
@@ -210,4 +221,5 @@
     {:else}
         <LoadingSpinner />
     {/if}
-</Container>
+
+</section>

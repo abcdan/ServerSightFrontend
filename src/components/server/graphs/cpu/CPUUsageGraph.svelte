@@ -50,7 +50,7 @@
 
 <article>
     {#key graphTimeText}
-        <h3 transition:fly>CPU Graph of past {graphTimeText}</h3>
+        <h3 transition:fly|local>CPU Graph of past {graphTimeText}</h3>
     {/key}
     {#await fetchingPromise}
         <LoadingSpinner />

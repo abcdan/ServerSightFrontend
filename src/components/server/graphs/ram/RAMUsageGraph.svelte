@@ -85,7 +85,7 @@
 
 <article>
     {#key graphTimeText}
-        <h3 transition:fly>RAM usage Graph of past {graphTimeText}</h3>
+        <h3 transition:fly|local>RAM usage Graph of past {graphTimeText}</h3>
     {/key}
     {#await fetchingPromise}
         <LoadingSpinner />

@@ -5,22 +5,34 @@
 
     export let cpuUsages: CpuUsage[] = []
 
-    // TODO move to its own component
+    const lineOptions = {
+        regionFill: 1,
+        xIsSeries: true,
+        dotSize: 4,
+    }
+
+    const colors = ['#344966']
+
     let chartData
     $: chartData = {
-        labels: cpuUsages.map((usage) => usage.createdAt.toLocaleString()),
+        labels: cpuUsages.map((usage) => `${usage.createdAt.getHours()}:${usage.createdAt.getMinutes()}`),
+        xaxis: {
+            type: 'datetime',
+        },
         yMarkers: [
             {
-                label: "CPU Usage%", value: 100
+                label: "CPU Usage%",
+                value: 100,
             }
         ],
         datasets: [
             {
                 name: "Cpu usage",
+                type: 'line',
                 values: cpuUsages.map((usage) => usage.averageCpuUsagePastMinute),
                 barOptions: {
                     max: 100
-                }
+                },
             }
         ]
     };
@@ -35,7 +47,9 @@
 {#if chartData}
     <Chart
         data={chartData}
+        {lineOptions}
+        {colors}
         type="line"
     />
-    <span>If the point is blank that means there was no cpu usage for that given minute</span>
+    <span>If a point is blank that means there was no cpu usage for that given minute</span>
 {/if}

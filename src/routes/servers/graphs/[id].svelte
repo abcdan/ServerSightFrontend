@@ -15,9 +15,23 @@
 
     let server: Server
     let cpuUsageOfServer: CpuUsage[] = []
-    let graphTimeText: string = 'past 5 minutes'
+    let graphTimeText: string = ''
 
     let ready: boolean = false
+
+    const TIME_RETRIEVAL_OPTIONS: { minutesToRetrieve: number; text: string }[] = [
+        {
+            text: 'past 5 minutes',
+            minutesToRetrieve: 5
+        },
+        {
+            text: 'past 30 minutes',
+            minutesToRetrieve: 30
+        },        {
+            text: 'past day',
+            minutesToRetrieve: 720
+        },
+    ]
     onMount(() => {
         getAndSetServer()
         ready = true
@@ -27,19 +41,17 @@
         ServerService.getServer(id).then((fetchedServer) => {
             server = fetchedServer
             getAndSetCpuUsage(5)
+            setNewGraph(5, 'past 5 minutes')
         }).catch(() => {
             popUpMessageStore.addMessage("404 Server with id not found!")
         })
     }
 
     function getAndSetCpuUsage(minutesBackWordsToFetch:number): void {
-        // get from past 5 minutes
-        // let fromDate: Date = new Date()
-        // fromDate.setMinutes(fromDate.getMinutes() - minutesBackWordsToFetch)
-        // let toDate: Date = new Date()
-        // TODO replace
-        let fromDate: Date = new Date('2021-04-05T12:50:23.224')
-        let toDate: Date = new Date('2021-04-05T12:56:23.224')
+        let fromDate: Date = new Date()
+        fromDate.setMinutes(fromDate.getMinutes() - minutesBackWordsToFetch)
+        let toDate: Date = new Date()
+
         minutesBackWordsToFetch = 120
         ServerCpuUsageService.getCpuUsageOfServer(server, {
             from: fromDate,
@@ -60,12 +72,7 @@
         let newCpuUsages: CpuUsage[] = []
 
         generateAllDatesBetweenDates(startDate, endDate).forEach((generatedDate) => {
-            let cpuUsage = cpuUsages.find((cpuUsage) => {
-                console.log(dateMatches(cpuUsage.createdAt, generatedDate))
-                console.log(cpuUsage)
-                console.log(generatedDate)
-                return dateMatches(cpuUsage.createdAt, generatedDate)}
-            )
+            let cpuUsage = cpuUsages.find((cpuUsage) => dateMatches(cpuUsage.createdAt, generatedDate))
             if(cpuUsage) {
                 newCpuUsages.push(cpuUsage)
             } else {
@@ -76,7 +83,6 @@
             }
         })
 
-        // TODO add sorting
         return newCpuUsages
     }
 
@@ -93,7 +99,6 @@
         const dateMove = new Date(startDate);
 
         while (dateMove < endDate) {
-            console.log(dateMove)
             generatedDates.push(new Date(dateMove));
 
             // increase minute by 1
@@ -103,10 +108,46 @@
         return generatedDates
     }
 
-    function setNewGraph(minutesFromNow: number, newGraphText: string): void {
+    function setNewGraph(minutesFromNow: number, newGraphTimeText: string): void {
+        graphTimeText = newGraphTimeText
+        getAndSetCpuUsage(minutesFromNow)
 
     }
 </script>
+
+<style>
+    section.graphs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        list-style-type: none;
+        grid-gap: 25px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .button-graph-wrapper {
+        display: flex;
+        flex-direction: row;
+        list-style-type: none;
+        flex-wrap: wrap;
+        margin: 0;
+        padding: 0;
+    }
+
+    .button-graph-wrapper > li {
+        margin-right: 6px;
+    }
+
+    span {
+        padding: 12px;
+    }
+
+    @media only screen and (max-width: 1200px) {
+        ol {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
 
 <svelte:head>
     {#if server}
@@ -116,16 +157,27 @@
 
 <!--Will else render server sided and fail-->
 {#if ready}
-    <h1>CPU Graph of past {graphTimeText}</h1>
-    <CPUGraph cpuUsages={cpuUsageOfServer} />
-    <!--  TODO improve  -->
-    <Button on:click={() => getAndSetCpuUsage(5)}>
-        Past 5 minutes
-    </Button>
-    <Button on:click={() => getAndSetCpuUsage(30)}>
-        Past 30 minutes
-    </Button>
-    <Button on:click={() => getAndSetCpuUsage(720)}>
-        Past day
-    </Button>
+    <section>
+        {#if server}
+            <header>
+                <h1>Graphs of {server.name} server</h1>
+            </header>
+            <section class="graphs">
+                <article>
+                    <h3>CPU Graph of past {graphTimeText}</h3>
+                    <CPUGraph cpuUsages={cpuUsageOfServer} />
+                    <!--  TODO improve  -->
+                    <ol class="button-graph-wrapper">
+                        {#each TIME_RETRIEVAL_OPTIONS as timeRetrieval}
+                            <li>
+                                <Button on:click={() => setNewGraph(timeRetrieval.minutesToRetrieve, timeRetrieval.text)}>
+                                    <span>{ timeRetrieval.text }</span>
+                                </Button>
+                            </li>
+                        {/each}
+                    </ol>
+                </article>
+            </section>
+        {/if}
+    </section>
 {/if}

@@ -1,40 +1,62 @@
 <script lang="ts">
     import type {Server} from "../../models/server/server";
+    import {stores} from "@sapper/app";
 
-    export let server: Server
+    export let server;
+    // getting server-id
+    const {page} = stores();
+    console.log($page.path.startsWith("/servers/graphs/"))
+    console.log($page)
 </script>
 
 <style>
-    section {
-        display: flex;
-        flex-direction: row;
-        list-style-type: none;
-        flex-wrap: wrap;
-        margin: 0;
-        padding: 0;
-        text-decoration: underline;
-        text-decoration-width: 2px;
+    section.container {
+        width: 100%;
+        margin: 0 !important;;
+        padding: 0 !important;;
+    }
+    ul li {
+        display: inline;
+        text-align: center;
+        margin: 0 !important;
+        padding: 0 !important;;
     }
 
     a {
-        font-size: 30px;
-        margin-right: 5px;
+        display: inline-block;
+        width: 25%;
+        padding: .75rem 0;
+        margin: 0;
         text-decoration: none;
+        color: #333;
     }
 
-    a:hover {
-        animation-duration: 200ms;
-        animation-name: toBlue;
-        color: rgb(52, 73, 102);
+    .first:hover ~ hr {
+        margin-left: 0;
+    }
 
+    hr.second-activated, .second:hover ~ hr {
+        margin-left: 25%;
+    }
+
+    hr {
+        height: .32rem;
+        width: 25%;
+        margin: 0;
+        background: rgb(52, 73, 102);
+        border: none;
+        transition: .3s ease-in-out;
     }
 </style>
 
-<section>
-    <a href="/servers/{server.id}">
-        Overview
-    </a>
-    <a href="/servers/graphs/{server.id}">
-        Graphs
-    </a>
+<section class="container">
+    <ul>
+         <li class="first">
+             <a href="/servers/{server.id}">Overview</a>
+         </li>
+         <li class="second">
+             <a href="/servers/graphs/{server.id}">Graphs</a>
+         </li>
+         <hr class={$page.path.startsWith("/servers/graph") ? 'second-activated': ''} />
+    </ul>
 </section>

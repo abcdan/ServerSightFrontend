@@ -26,10 +26,16 @@
     };
 </script>
 
+<style>
+    span {
+        font-style: italic;
+    }
+</style>
 
 {#if chartData}
     <Chart
         data={chartData}
         type="line"
     />
+    <span>If the point is blank that means there was no cpu usage for that given minute</span>
 {/if}

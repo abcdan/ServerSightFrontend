@@ -15,6 +15,7 @@
 
     let server: Server
     let cpuUsageOfServer: CpuUsage[] = []
+    let graphTimeText: string = 'past 5 minutes'
 
     let ready: boolean = false
     onMount(() => {
@@ -35,22 +36,17 @@
         // get from past 5 minutes
         // let fromDate: Date = new Date()
         // fromDate.setMinutes(fromDate.getMinutes() - minutesBackWordsToFetch)
-
+        // let toDate: Date = new Date()
         // TODO replace
-        let fromDate: Date = new Date('2021-04-01T15:32:23.224')
-        let toDate: Date = new Date()
+        let fromDate: Date = new Date('2021-04-05T12:50:23.224')
+        let toDate: Date = new Date('2021-04-05T12:56:23.224')
         minutesBackWordsToFetch = 120
         ServerCpuUsageService.getCpuUsageOfServer(server, {
             from: fromDate,
             to: toDate
         }).then((cpuUsages) => {
-            console.log(cpuUsages)
-            if(cpuUsages.length === 0) {
-                popUpMessageStore.addMessage("There are no cpu usages of the past 5 minutes.")
-            } else {
-                // TODO replace with promise
-                cpuUsageOfServer = fillEmptyTimestamps(cpuUsages, minutesBackWordsToFetch, fromDate, toDate)
-            }
+            // TODO replace with promise
+            cpuUsageOfServer = fillEmptyTimestamps(cpuUsages, minutesBackWordsToFetch, fromDate, toDate)
         }).catch((ex) => {
             popUpMessageStore.addMessage("Could not fetch cpu usages.")
             throw ex
@@ -61,48 +57,54 @@
     // For example you want to fetch the last 30 minutes but there are only 28 cpu usages.
     // this method will then fill these 2 so that there is a cpu usage of every minute.
     function fillEmptyTimestamps(cpuUsages: CpuUsage[], totalAmount: number, startDate: Date, endDate: Date): CpuUsage[] {
-        // we got them all.
-        if(totalAmount === cpuUsages.length) {
-            return cpuUsages
-        }
+        let newCpuUsages: CpuUsage[] = []
 
-        const newCpUsagesList: CpuUsage[] = []
-
-        let previousCpuUsage: CpuUsage = cpuUsages[0]
-        for (let i = 1; i < totalAmount; i++) {
-            const dateToFill = new Date(previousCpuUsage.createdAt)
-            dateToFill.setMinutes(previousCpuUsage.createdAt.getMinutes() + 1)
-
-            if(cpuUsages[i] === undefined) {
-                newCpUsagesList.push({
-                    averageCpuUsagePastMinute: 0,
-                    createdAt: dateToFill
-                })
-                continue
-            }
-            let cpuUsage = cpuUsages[i]
-            newCpUsagesList.push(cpuUsage)
-
-            const minuteDifference = _getDifferenceInMinutes(cpuUsage.createdAt, previousCpuUsage.createdAt);
-
-            // if there is a minute difference it means there is a difference
-            if(minuteDifference > 1) {
-                newCpUsagesList.push({
-                    averageCpuUsagePastMinute: 0,
-                    createdAt: dateToFill
+        generateAllDatesBetweenDates(startDate, endDate).forEach((generatedDate) => {
+            let cpuUsage = cpuUsages.find((cpuUsage) => {
+                console.log(dateMatches(cpuUsage.createdAt, generatedDate))
+                console.log(cpuUsage)
+                console.log(generatedDate)
+                return dateMatches(cpuUsage.createdAt, generatedDate)}
+            )
+            if(cpuUsage) {
+                newCpuUsages.push(cpuUsage)
+            } else {
+                newCpuUsages.push({
+                    averageCpuUsagePastMinute: null,
+                    createdAt: generatedDate
                 })
             }
-            previousCpuUsage = cpuUsage
-        }
+        })
 
-        return newCpUsagesList
+        // TODO add sorting
+        return newCpuUsages
     }
 
-    function _getDifferenceInMinutes(startDate: Date, endDate: Date): number {
-        let diffMs = (startDate - endDate); // milliseconds between now & Christmas
+    function dateMatches(date1: Date, date2: Date) {
+        // because we don't want to compare to the second
+        return date1.getFullYear() === date2.getFullYear() &&
+            date1.getMonth() === date2.getMonth() &&
+            date1.getHours() === date2.getHours() &&
+            date1.getMinutes() === date2.getMinutes()
+    }
 
-         // minutes
-        return Math.round(((diffMs % 86400000) % 3600000) / 60000)
+    function generateAllDatesBetweenDates(startDate: Date, endDate: Date): Date[] {
+        let generatedDates: Date[] = []
+        const dateMove = new Date(startDate);
+
+        while (dateMove < endDate) {
+            console.log(dateMove)
+            generatedDates.push(new Date(dateMove));
+
+            // increase minute by 1
+            dateMove.setMinutes(dateMove.getMinutes() + 1);
+        }
+
+        return generatedDates
+    }
+
+    function setNewGraph(minutesFromNow: number, newGraphText: string): void {
+
     }
 </script>
 
@@ -114,6 +116,7 @@
 
 <!--Will else render server sided and fail-->
 {#if ready}
+    <h1>CPU Graph of past {graphTimeText}</h1>
     <CPUGraph cpuUsages={cpuUsageOfServer} />
     <!--  TODO improve  -->
     <Button on:click={() => getAndSetCpuUsage(5)}>

@@ -1,7 +1,7 @@
 <script lang="ts">
     // https://github.com/himynameisdave/svelte-frappe-charts
     import Chart from 'svelte-frappe-charts';
-    import type {CpuUsage} from "../../../models/server/cpuUsage";
+    import type {CpuUsage} from "../../../../models/server/cpuUsage";
 
     export let cpuUsages: CpuUsage[] = []
 
@@ -15,10 +15,10 @@
 
     let chartData
     $: chartData = {
-        labels: cpuUsages.map((usage) => `${usage.createdAt.getHours()}:${usage.createdAt.getMinutes()}`),
-        xaxis: {
-            type: 'datetime',
-        },
+        // if there are more than 720 minutes then also display the date because it is bigger than a day.
+        labels: cpuUsages.length > 720  ?
+            cpuUsages.map((usage) => usage.createdAt.toLocaleString()):
+            cpuUsages.map((usage) => `${usage.createdAt.getHours()}:${usage.createdAt.getMinutes()}`),
         yMarkers: [
             {
                 label: "CPU Usage%",

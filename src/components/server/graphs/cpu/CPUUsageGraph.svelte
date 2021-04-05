@@ -18,19 +18,18 @@
 
     onMount(() => {
         graphTimeText = 'past 5 minutes'
-        getAndSetCpuUsage(5)
+        let fromDate: Date = new Date()
+        fromDate.setMinutes(fromDate.getMinutes() - 5)
+        let toDate: Date = new Date()
+        getAndSetCpuUsage(fromDate, toDate)
     })
 
-    function getAndSetCpuUsage(minutesBackWordsToFetch: number): void {
-        let fromDate: Date = new Date()
-        fromDate.setMinutes(fromDate.getMinutes() - minutesBackWordsToFetch)
-        let toDate: Date = new Date()
-
+    function getAndSetCpuUsage(fromDate: Date, toDate: Date): void {
         fetchingPromise = ServerCpuUsageService.getCpuUsageOfServer(server, {
             from: fromDate,
             to: toDate
         }).then((cpuUsages) => {
-            cpuUsageOfServer = fillEmptyTimestamps(cpuUsages, minutesBackWordsToFetch, fromDate, toDate, (generatedDate: Date) => {
+            cpuUsageOfServer = fillEmptyTimestamps(cpuUsages, fromDate, toDate, (generatedDate: Date) => {
                     return {
                         averageCpuUsagePastMinute: null,
                         createdAt: generatedDate
@@ -42,9 +41,11 @@
         })
     }
 
-    function onNewGraphTime(event): void {
-        graphTimeText = event.detail.text
-        getAndSetCpuUsage(event.detail.minutesFromNow)
+    function onNewSelectedTime(event): void {
+        const fromDate = event.detail.fromDate
+        const toDate = event.detail.toDate
+
+        getAndSetCpuUsage(fromDate, toDate)
     }
 </script>
 
@@ -65,6 +66,9 @@
             label="CPU usage in %"
             maxYValue="100"
         />
+        <span>If a point is blank that means there was no cpu usage for that given minute</span>
     {/if}
-    <GraphTiming on:time-selected={onNewGraphTime} />
+    <GraphTiming
+        on:time-selected={onNewSelectedTime}
+    />
 </article>

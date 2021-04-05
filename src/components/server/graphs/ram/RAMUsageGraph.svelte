@@ -23,19 +23,18 @@
 
     onMount(() => {
         graphTimeText = 'past 5 minutes'
-        getAndSetRamUsages(5)
+        let fromDate: Date = new Date()
+        fromDate.setMinutes(fromDate.getMinutes() - 5)
+        let toDate: Date = new Date()
+        getAndSetRamUsages(fromDate, toDate)
     })
 
-    function getAndSetRamUsages(minutesBackWordsToFetch: number): void {
-        let fromDate: Date = new Date()
-        fromDate.setMinutes(fromDate.getMinutes() - minutesBackWordsToFetch)
-        let toDate: Date = new Date()
-
+    function getAndSetRamUsages(fromDate:Date, toDate: Date): void {
         fetchingPromise = ServerRAMUsageService.getRAMUsagesOfServer(server, {
             from: fromDate,
             to: toDate
         }).then((cpuUsages) => {
-            ramUsagesOfServer = fillEmptyTimestamps(cpuUsages, minutesBackWordsToFetch, fromDate, toDate, (generatedDate: Date) => {
+            ramUsagesOfServer = fillEmptyTimestamps(cpuUsages, fromDate, toDate, (generatedDate: Date) => {
                     return {
                         usageInBytes: null,
                         totalAvailableInBytes: null,
@@ -77,9 +76,11 @@
         })
     }
 
-    function onNewGraphTime(event): void {
-        graphTimeText = event.detail.text
-        getAndSetRamUsages(event.detail.minutesFromNow)
+    function onNewSelectedTime(event): void {
+        const fromDate = event.detail.fromDate
+        const toDate = event.detail.toDate
+
+        getAndSetRamUsages(fromDate, toDate)
     }
 </script>
 
@@ -100,6 +101,7 @@
             x={convertRAMUsageToUnitSize(ramUsagesOfServer)}
             y={ramUsagesOfServer.map((ramUsage) => ramUsage.createdAt)}
         />
+        <span>If a point is blank that means there was no RAM usage for that given minute</span>
     {/if}
-    <GraphTiming on:time-selected={onNewGraphTime} />
+    <GraphTiming on:time-selected={onNewSelectedTime} />
 </article>

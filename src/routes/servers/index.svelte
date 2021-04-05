@@ -21,12 +21,11 @@
     function onFilter(event): void {
         const filterData = event.detail
 
-        // TODO add exception handling
-        // TODO make loading spinner working
         serversFetchingPromise = ServerService.getUserServers({
             name: filterData.name,
-            powerstatus: filterData.powerstatus
-        })
+            powerstatus: filterData.powerstatus,
+            ip: filterData.ip
+        }).then((serversFetched) => servers = serversFetched)
     }
 </script>
 

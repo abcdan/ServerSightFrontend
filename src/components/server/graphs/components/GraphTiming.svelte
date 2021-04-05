@@ -1,11 +1,29 @@
 <script lang="ts">
+    import DatePicker from "@beyonk/svelte-datepicker/src/components/DatePicker.svelte";
     import Button from "../../../shared/buttons/Button.svelte";
     import {createEventDispatcher} from "svelte";
 
     const eventDispatcher = createEventDispatcher()
     function onNewGraph(minutesFromNow: number, text: string): void {
+        let fromDate: Date = new Date()
+        fromDate.setMinutes(fromDate.getMinutes() - minutesFromNow)
+        let toDate: Date = new Date()
+
         eventDispatcher('time-selected', {
-            minutesFromNow,
+            toDate,
+            fromDate,
+            text
+        })
+    }
+
+    function onCustomDate(event): void{
+        const fromDate = event.detail.from
+        const toDate = event.detail.to
+
+        let text = `${fromDate} to ${toDate}`
+        eventDispatcher('time-selected', {
+            toDate,
+            fromDate,
             text
         })
     }
@@ -31,8 +49,8 @@
         flex-direction: row;
         list-style-type: none;
         flex-wrap: wrap;
-        margin: 0;
         padding: 0;
+        margin-bottom: 5px;
     }
     .button-graph-wrapper > li {
         margin-right: 6px;
@@ -51,3 +69,15 @@
         </li>
     {/each}
 </ol>
+Pick custom timeframe:
+<DatePicker
+    time=true
+    range={true}
+    on:range-selected={onCustomDate}
+    >
+    <Button
+            backgroundColor="#BFCC94"
+    >
+        <span>Select custom time</span>
+    </Button>
+</DatePicker>

@@ -8,7 +8,7 @@ export class ServerService {
     /**
      * Gets the servers of the current logged in user
      */
-    static async getUserServers(searchQuery?: { name: string, powerstatus: boolean}): Promise<Server[]> {
+    static async getUserServers(searchQuery?: { name: string, powerstatus: boolean, ip: string}): Promise<Server[]> {
         const servers = (await HttpClient.get('servers', searchQuery)).content
         return servers as Server[]
     }

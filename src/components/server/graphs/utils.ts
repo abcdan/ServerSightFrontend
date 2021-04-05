@@ -5,7 +5,6 @@ import type {CpuUsage} from "../../../models/server/cpuUsage";
  * For example you want to fetch the last 30 minutes but there are only 28 cpu usages.
  * this method will then fill these 2 so that there is a cpu usage of every minute.
  * @param cpuUsages
- * @param totalAmount
  * @param startDate
  * @param endDate
  * @param creationCallback - This callback will be called if a date needs to be filled and you can set how you want to handle that.
@@ -14,7 +13,7 @@ import type {CpuUsage} from "../../../models/server/cpuUsage";
 interface ObjectFiller {
     (generatedDate: Date): any;
 }
-export function fillEmptyTimestamps (existingArray: { createdAt: Date } [], totalAmount: number, startDate: Date, endDate: Date,
+export function fillEmptyTimestamps (existingArray: { createdAt: Date } [], startDate: Date, endDate: Date,
                                      creationCallback: ObjectFiller): {}[] {
     let arrayToFill: {}[] = []
 

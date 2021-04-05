@@ -2,10 +2,8 @@
     import SecondaryLink from "./shared/buttons/SecondaryLink.svelte";
     import Img from "./shared/Img.svelte";
     import {fly} from "svelte/transition"
-    import Button from "./shared/buttons/Button.svelte";
 
     let expanded = false
-    export let segment;
 </script>
 
 <style>

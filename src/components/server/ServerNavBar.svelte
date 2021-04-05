@@ -1,12 +1,8 @@
 <script lang="ts">
-    import type {Server} from "../../models/server/server";
     import {stores} from "@sapper/app";
 
     export let server;
-    // getting server-id
     const {page} = stores();
-    console.log($page.path.startsWith("/servers/graphs/"))
-    console.log($page)
 </script>
 
 <style>

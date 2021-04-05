@@ -5,17 +5,15 @@
     import type {Server} from "../../../models/server/server";
     import {stores} from "@sapper/app";
     import type {CpuUsage} from "../../../models/server/cpuUsage";
-    import CPUGraphManager from "../../../components/server/graphs/cpu/CPUUsageGraph.svelte";
+    import CPUUsageGraph from "../../../components/server/graphs/cpu/CPUUsageGraph.svelte";
     import RAMUsageGraph from "../../../components/server/graphs/ram/RAMUsageGraph.svelte";
+    import ServerNavBar from "../../../components/server/ServerNavBar.svelte";
 
     // getting server-id
     const {page} = stores();
     const {id} = ($page as any).params;
 
     let server: Server
-    let cpuUsageOfServer: CpuUsage[] = []
-    let graphTimeText: string = ''
-
     let ready: boolean = false
 
     onMount(() => {
@@ -33,6 +31,10 @@
 </script>
 
 <style>
+    section.main {
+        padding-right: 25px;
+        padding-left: 25px;
+    }
     section.graphs {
         display: grid;
         grid-template-columns: 1fr;
@@ -50,16 +52,15 @@
 </svelte:head>
 
 <!--Will else render server sided and fail-->
-{#if ready}
-    <section>
-        {#if server}
-            <header>
-                <h1>Graphs of {server.name} server</h1>
-            </header>
-            <section class="graphs">
-                <CPUGraphManager {server} />
-                <RAMUsageGraph {server} />
-            </section>
-        {/if}
+{#if ready && server}
+    <ServerNavBar {server} />
+    <section class="main">
+        <header>
+            <h1>Graphs of {server.name} server</h1>
+        </header>
+        <section class="graphs">
+            <CPUUsageGraph {server} />
+            <RAMUsageGraph {server} />
+        </section>
     </section>
 {/if}

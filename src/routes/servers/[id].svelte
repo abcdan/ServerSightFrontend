@@ -23,6 +23,7 @@
     import type {PortServer} from "../../models/server/port";
     import {ServerPortService} from "../../services/server/serverPortService";
     import PortList from "../../components/server/ports/PortList.svelte";
+    import ServerNavBar from "../../components/server/ServerNavBar.svelte";
 
 
     const {page} = stores();
@@ -158,6 +159,7 @@
 
 <Container cssClass="large">
     {#if server}
+        <ServerNavBar {server} />
         <div>
             <div class="icon">
                 {#if server.imagePath}

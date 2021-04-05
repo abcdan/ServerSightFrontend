@@ -63,7 +63,6 @@
         }).totalAvailableInBytes
 
         const sizeOfIndex = Math.floor(Math.log(getMaximumAvailableRAMInBytes()) / Math.log(k));
-        console.log(parseFloat((maxRamAvailable / Math.pow(k, sizeOfIndex)).toFixed(decimals)))
         return parseFloat((maxRamAvailable / Math.pow(k, sizeOfIndex)).toFixed(decimals))
     }
 

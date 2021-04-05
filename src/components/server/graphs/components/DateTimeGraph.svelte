@@ -8,14 +8,18 @@
     export let colors: string[] = ['#344966']
     export let label: string
 
-    const lineOptions = {
+    let lineOptions
+    $: lineOptions = {
         regionFill: 1,
         xIsSeries: true,
         dotSize: 4,
+        maxValue: maxYValue,
+        max: maxYValue
     }
 
     let chartData
     $: if (y.length > 0 && x.length > 0) {
+
         chartData = {
             // if there are more than 720 minutes then also display the date because it is bigger than a day.
             labels: y.length > 720  ?
@@ -32,9 +36,6 @@
                     name: label,
                     type: 'line',
                     values: x,
-                    barOptions: {
-                        max: maxYValue
-                    },
                 }
             ]
         }
@@ -49,10 +50,10 @@
 
 {#if chartData}
     <Chart
-            data={chartData}
-            {lineOptions}
-            {colors}
-            type="line"
+        data={chartData}
+        {lineOptions}
+        {colors}
+        type="line"
     />
     <span>If a point is blank that means there was no cpu usage for that given minute</span>
 {/if}

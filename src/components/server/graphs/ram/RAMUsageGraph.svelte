@@ -12,7 +12,11 @@
 
     export let server: Server
 
-    let unitSizeUsed: string = 'byte'
+    const k = 1024
+    const decimals = 2
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+    let currentUnitSize = 'KB'
     let fetchingPromise;
     let ramUsagesOfServer: RamUsage[]
     let graphTimeText: string = ''
@@ -44,11 +48,34 @@
         })
     }
 
-    function getMaximumAvailableRAM(): number {
+    function getMaximumAvailableRAMInBytes(): number {
         // searches for the highest possible ram available in current list
         return ramUsagesOfServer.reduce(function(prev, current) {
             return (prev.totalAvailableInBytes > current.totalAvailableInBytes) ? prev : current
         }).totalAvailableInBytes
+    }
+
+    // TODO refactor
+    function getMaximumAvailableRAMCalculatedWithUnitType(): number {
+        // searches for the highest possible ram available in current list
+        const maxRamAvailable = ramUsagesOfServer.reduce(function(prev, current) {
+            return (prev.totalAvailableInBytes > current.totalAvailableInBytes) ? prev : current
+        }).totalAvailableInBytes
+
+        const sizeOfIndex = Math.floor(Math.log(getMaximumAvailableRAMInBytes()) / Math.log(k));
+        console.log(parseFloat((maxRamAvailable / Math.pow(k, sizeOfIndex)).toFixed(decimals)))
+        return parseFloat((maxRamAvailable / Math.pow(k, sizeOfIndex)).toFixed(decimals))
+    }
+
+    function convertRAMUsageToUnitSize(ramUsages:RamUsage[]): number[] {
+        const dm = decimals < 0 ? 0 : decimals;
+
+        const sizeOfIndex = Math.floor(Math.log(getMaximumAvailableRAMInBytes()) / Math.log(k));
+        currentUnitSize = sizes[sizeOfIndex]
+
+        return ramUsages.map((ramUsage) => {
+            return parseFloat((ramUsage.usageInBytes / Math.pow(k, sizeOfIndex)).toFixed(dm));
+        })
     }
 
     function onNewGraphTime(event): void {
@@ -69,10 +96,10 @@
 
     {#if ramUsagesOfServer}
         <DateTimeGraph
-            label="RAM usage in bytes"
-            x={ramUsagesOfServer.map((ramUsage) => ramUsage.usageInBytes)}
+            maxYValue="{getMaximumAvailableRAMCalculatedWithUnitType()}"
+            label="Maximum ram available in {currentUnitSize}"
+            x={convertRAMUsageToUnitSize(ramUsagesOfServer)}
             y={ramUsagesOfServer.map((ramUsage) => ramUsage.createdAt)}
-            maxYValue="{getMaximumAvailableRAM()}"
         />
     {/if}
     <GraphTiming on:time-selected={onNewGraphTime} />

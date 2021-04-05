@@ -1,15 +1,18 @@
 <script lang="ts">
-    import CPUGraph from "./CPUGraph.svelte";
     import type {CpuUsage} from "../../../../models/server/cpuUsage";
     import type {Server} from "../../../../models/server/server";
     import {ServerCpuUsageService} from "../../../../services/server/serverCpuUsageService";
     import {popUpMessageStore} from "../../../../stores/popupMessagesStore";
     import {onMount} from "svelte";
     import {fillEmptyTimestamps} from "../utils";
-    import GraphTiming from "../GraphTiming.svelte";
+    import GraphTiming from "../components/GraphTiming.svelte";
+    import DateTimeGraph from "../components/DateTimeGraph.svelte";
+    import LoadingSpinner from "../../../shared/LoadingSpinner.svelte";
 
     export let server: Server
-    let cpuUsageOfServer: CpuUsage[] = []
+
+    let fetchingPromise;
+    let cpuUsageOfServer: CpuUsage[]
     let graphTimeText: string = ''
 
     onMount(() => {
@@ -21,11 +24,10 @@
         fromDate.setMinutes(fromDate.getMinutes() - minutesBackWordsToFetch)
         let toDate: Date = new Date()
 
-        ServerCpuUsageService.getCpuUsageOfServer(server, {
+        fetchingPromise = ServerCpuUsageService.getCpuUsageOfServer(server, {
             from: fromDate,
             to: toDate
         }).then((cpuUsages) => {
-            // TODO replace with promise
             cpuUsageOfServer = fillEmptyTimestamps(cpuUsages, minutesBackWordsToFetch, fromDate, toDate, (generatedDate: Date) => {
                     return {
                         averageCpuUsagePastMinute: null,
@@ -34,11 +36,11 @@
                 }
             ) as CpuUsage[]
         }).catch((ex) => {
-            popUpMessageStore.addMessage("Could not fetch cpu usages.")
+            popUpMessageStore.addMessage('Could not fetch cpu usages.')
         })
     }
 
-    function onNewGraph(event): void {
+    function onNewGraphTime(event): void {
         graphTimeText = event.detail.text
         getAndSetCpuUsage(event.detail.minutesFromNow)
     }
@@ -46,6 +48,18 @@
 
 <article>
     <h3>CPU Graph of past {graphTimeText}</h3>
-    <CPUGraph cpuUsages={cpuUsageOfServer} />
-    <GraphTiming on:time-selected={onNewGraph} />
+    {#await fetchingPromise}
+        <LoadingSpinner />
+    {:catch e}
+        <span>Failed to load cpu usages data</span>
+    {/await}
+
+    {#if cpuUsageOfServer}
+        <DateTimeGraph
+            x={cpuUsageOfServer.map((cpuUsage) => cpuUsage.averageCpuUsagePastMinute)}
+            y={cpuUsageOfServer.map((cpuUsage) => cpuUsage.createdAt)}
+            maxYValue="100"
+        />
+    {/if}
+    <GraphTiming on:time-selected={onNewGraphTime} />
 </article>

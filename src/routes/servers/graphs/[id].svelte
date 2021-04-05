@@ -6,9 +6,9 @@
     import {stores} from "@sapper/app";
     import {ServerCpuUsageService} from "../../../services/server/serverCpuUsageService";
     import type {CpuUsage} from "../../../models/server/cpuUsage";
-    import CPUGraph from "../../../components/server/graphs/cpu/CPUGraph.svelte";
     import Button from "../../../components/shared/buttons/Button.svelte";
-    import CPUGraphManager from "../../../components/server/graphs/cpu/CPUGraphManager.svelte";
+    import CPUGraphManager from "../../../components/server/graphs/cpu/CPUUsageGraph.svelte";
+    import RAMUsageGraph from "../../../components/server/graphs/ram/RAMUsageGraph.svelte";
 
     // getting server-id
     const {page} = stores();
@@ -60,6 +60,7 @@
             </header>
             <section class="graphs">
                 <CPUGraphManager {server} />
+                <RAMUsageGraph {server} />
             </section>
         {/if}
     </section>

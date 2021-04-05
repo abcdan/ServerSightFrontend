@@ -95,11 +95,9 @@
         section.server-filter {
             height: auto;
             position: relative;
-            top: 50px;
         }
 
         section.servers-list {
-            top: 50px;
             position: relative;
         }
         section.servers-list, section.server-filter {

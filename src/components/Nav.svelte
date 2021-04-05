@@ -1,18 +1,44 @@
 <script>
     import SecondaryLink from "./shared/buttons/SecondaryLink.svelte";
     import Img from "./shared/Img.svelte";
+    import {fly} from "svelte/transition"
+    import Button from "./shared/buttons/Button.svelte";
 
+    let expanded = false
     export let segment;
 </script>
 
 <style>
-    nav {
+    nav.desktop {
         position: absolute;
         display: block;
         top: 0;
         height: 75px;
         width: 100%;
         background-color: #344966;
+    }
+
+    nav.mobile {
+        position: absolute;
+        display: none;
+        top: 0;
+        height: auto;
+        width: 100vw;
+        z-index: 50;
+        background-color: #344966;
+    }
+
+    img {
+        height: 50px;
+        outline: none;
+        color: transparent;
+        float: left;
+    }
+
+    div.mobile-container {
+        width: 100vw;
+        height: auto;
+        margin: 0;
     }
 
     h1{
@@ -37,6 +63,12 @@
         margin: 0 !important;
     }
 
+    div.mobile-item {
+        display: block;
+        width: calc(100% - 20px);
+        margin: 5px;
+    }
+
     div.logout {
         float: right;
         margin-right: 10px;
@@ -49,14 +81,19 @@
         padding-right: 5px;
     }
 
-    @media only screen and (max-width: 1200px) {
-        nav {
-            height: auto;
+    @media only screen and (max-width: 1000px) {
+        h1 {
+            float: none;
+        }
+        nav.desktop {
+            display: none;
+        }
+        nav.mobile {
+            display: block;
         }
     }
 </style>
-<nav>
-    <!--  TODO add logo  -->
+<nav class="desktop">
     <div class="pages logo">
         <Img src="favicon.png" alt="server icon" />
     </div>
@@ -79,3 +116,29 @@
         </SecondaryLink>
     </div>
 </nav>
+<nav class="mobile">
+    <div class="mobile-container">
+        <h1>Server sight dashboard</h1>
+        <img on:click={() => expanded = !expanded} src="/hamburger-icon.svg" alt="hamburger icon" />
+    </div>
+    {#if expanded}
+        <div class="mobile-container" transition:fly|local>
+            <div class="mobile-item">
+                <SecondaryLink href="/servers">
+                    <span>Your servers</span>
+                </SecondaryLink>
+            </div>
+            <div class="mobile-item">
+                <SecondaryLink href="/api/keys">
+                    <span>Api key management</span>
+                </SecondaryLink>
+            </div>
+            <div class="mobile-item">
+                <SecondaryLink href="/servers">
+                    <span>Logout</span>
+                </SecondaryLink>
+            </div>
+        </div>
+    {/if}
+</nav>
+

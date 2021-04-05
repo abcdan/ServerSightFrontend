@@ -14,8 +14,10 @@
     img {
         height: 50px;
         width: 50px;
-        /*-webkit-animation: infiniteRotate 2s linear infinite;*/
+        -webkit-animation: infiniteRotate 2s linear infinite;
         animation: infiniteRotate 2s linear infinite;
+        text-align: center;
+        justify-content: center;
     }
 </style>
 <img src="favicon.png" alt="favicon">

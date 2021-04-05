@@ -19,8 +19,8 @@
             text: 'past 30 minutes',
             minutesToRetrieve: 30
         }, {
-            text: 'past day',
-            minutesToRetrieve: 720
+            text: 'past hour',
+            minutesToRetrieve: 60
         },
     ]
 

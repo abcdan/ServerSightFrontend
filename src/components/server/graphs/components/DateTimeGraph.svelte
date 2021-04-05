@@ -4,8 +4,9 @@
 
     export let y: Date[] = []
     export let x: number[] = []
-    export let maxYValue = 100;
-    export let colors = ['#344966']
+    export let maxYValue:number = 0;
+    export let colors: string[] = ['#344966']
+    export let label: string
 
     const lineOptions = {
         regionFill: 1,
@@ -22,13 +23,13 @@
                 y.map((date) => `${date.getHours()}:${date.getMinutes()}`),
             yMarkers: [
                 {
-                    label: "CPU Usage%",
+                    label: label,
                     value: maxYValue,
                 }
             ],
             datasets: [
                 {
-                    name: "Cpu usage",
+                    name: label,
                     type: 'line',
                     values: x,
                     barOptions: {

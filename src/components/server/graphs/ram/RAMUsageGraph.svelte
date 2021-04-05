@@ -8,6 +8,7 @@
     import {ServerRAMUsageService} from "../../../../services/server/serverRAMUsageService";
     import type {RamUsage} from "../../../../models/server/ramUsage";
     import type {Server} from "../../../../models/server/server";
+    import {fly} from "svelte/transition"
 
     export let server: Server
 
@@ -17,6 +18,7 @@
     let graphTimeText: string = ''
 
     onMount(() => {
+        graphTimeText = 'past 5 minutes'
         getAndSetRamUsages(5)
     })
 
@@ -44,12 +46,9 @@
 
     function getMaximumAvailableRAM(): number {
         // searches for the highest possible ram available in current list
-        const max = ramUsagesOfServer.reduce(function(prev, current) {
+        return ramUsagesOfServer.reduce(function(prev, current) {
             return (prev.totalAvailableInBytes > current.totalAvailableInBytes) ? prev : current
         }).totalAvailableInBytes
-
-        console.log(max)
-        return max
     }
 
     function onNewGraphTime(event): void {
@@ -59,7 +58,9 @@
 </script>
 
 <article>
-    <h3>RAM usage Graph of past {graphTimeText}</h3>
+    {#key graphTimeText}
+        <h3 transition:fly>RAM usage Graph of past {graphTimeText}</h3>
+    {/key}
     {#await fetchingPromise}
         <LoadingSpinner />
     {:catch e}
@@ -68,8 +69,9 @@
 
     {#if ramUsagesOfServer}
         <DateTimeGraph
-            x={ramUsagesOfServer.map((cpuUsage) => cpuUsage.usageInBytes)}
-            y={ramUsagesOfServer.map((cpuUsage) => cpuUsage.createdAt)}
+            label="RAM usage in bytes"
+            x={ramUsagesOfServer.map((ramUsage) => ramUsage.usageInBytes)}
+            y={ramUsagesOfServer.map((ramUsage) => ramUsage.createdAt)}
             maxYValue="{getMaximumAvailableRAM()}"
         />
     {/if}

@@ -8,6 +8,7 @@
     import GraphTiming from "../components/GraphTiming.svelte";
     import DateTimeGraph from "../components/DateTimeGraph.svelte";
     import LoadingSpinner from "../../../shared/LoadingSpinner.svelte";
+    import {fly} from "svelte/transition"
 
     export let server: Server
 
@@ -16,6 +17,7 @@
     let graphTimeText: string = ''
 
     onMount(() => {
+        graphTimeText = 'past 5 minutes'
         getAndSetCpuUsage(5)
     })
 
@@ -47,7 +49,9 @@
 </script>
 
 <article>
-    <h3>CPU Graph of past {graphTimeText}</h3>
+    {#key graphTimeText}
+        <h3 transition:fly>CPU Graph of past {graphTimeText}</h3>
+    {/key}
     {#await fetchingPromise}
         <LoadingSpinner />
     {:catch e}
@@ -58,6 +62,7 @@
         <DateTimeGraph
             x={cpuUsageOfServer.map((cpuUsage) => cpuUsage.averageCpuUsagePastMinute)}
             y={cpuUsageOfServer.map((cpuUsage) => cpuUsage.createdAt)}
+            label="CPU usage in %"
             maxYValue="100"
         />
     {/if}

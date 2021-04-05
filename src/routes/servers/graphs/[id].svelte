@@ -4,9 +4,7 @@
     import {popUpMessageStore} from "../../../stores/popupMessagesStore";
     import type {Server} from "../../../models/server/server";
     import {stores} from "@sapper/app";
-    import {ServerCpuUsageService} from "../../../services/server/serverCpuUsageService";
     import type {CpuUsage} from "../../../models/server/cpuUsage";
-    import Button from "../../../components/shared/buttons/Button.svelte";
     import CPUGraphManager from "../../../components/server/graphs/cpu/CPUUsageGraph.svelte";
     import RAMUsageGraph from "../../../components/server/graphs/ram/RAMUsageGraph.svelte";
 

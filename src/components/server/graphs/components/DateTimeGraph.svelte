@@ -23,7 +23,6 @@
     $: console.log(datasets)
     let chartData
     $: if (y.length > 0 && x.length > 0) {
-
         chartData = {
             // if there are more than 720 minutes then also display the date because it is bigger than a day.
             labels: y.length > 720  ?

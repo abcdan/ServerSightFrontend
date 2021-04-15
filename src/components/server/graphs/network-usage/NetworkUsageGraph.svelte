@@ -36,8 +36,8 @@
         }).then((cpuUsages) => {
             networkUsageOfServer = fillEmptyTimestamps(cpuUsages, fromDate, toDate, (generatedDate: Date) => {
                     return {
-                        downloadInBytes: null,
-                        uploadInBytes: null,
+                        downloadInBytes: 0,
+                        uploadInBytes: 0,
                         createdAt: generatedDate
                     }
                 }
@@ -49,22 +49,27 @@
 
     function getMaximumAvailableNetworkUsageInBytes(): number {
         // searches for the highest possible network usage in current list
-        const highestNetworkUsage =  networkUsageOfServer.reduce(function(prev, current) {
+        const highestUploadInBytes =  networkUsageOfServer.reduce(function(prev, current) {
             return (prev.downloadInBytes > current.downloadInBytes) ? prev : current
-        })
+        }).downloadInBytes
 
-        return highestNetworkUsage.downloadInBytes + highestNetworkUsage.uploadInBytes
+        const highestDownloadInBytes =  networkUsageOfServer.reduce(function(prev, current) {
+            return (prev.uploadInBytes > current.uploadInBytes) ? prev : current
+        }).uploadInBytes
+
+        return highestDownloadInBytes >= highestUploadInBytes ?
+            highestDownloadInBytes : highestUploadInBytes
     }
 
     // TODO refactor
     function getMaximumAvailableNetworkUsageCalculatedWithUnitType(): number {
-        // searches for the highest possible ram available in current list
-        const maxRamAvailable = networkUsageOfServer.reduce(function(prev, current) {
-            return (prev.downloadInBytes + prev.uploadInBytes > current.downloadInBytes + current.downloadInBytes) ? prev : current
-        })
+        // searches for the highest possible network usage available in current list
+        const maxNetworkUsageAvailable = getMaximumAvailableNetworkUsageInBytes()
 
-        const sizeOfIndex = Math.floor(Math.log(getMaximumAvailableNetworkUsageInBytes()) / Math.log(k));
-        return parseFloat((maxRamAvailable / Math.pow(k, sizeOfIndex)).toFixed(decimals))
+        console.log(maxNetworkUsageAvailable)
+        const sizeOfIndex = Math.floor(Math.log(maxNetworkUsageAvailable) / Math.log(k));
+
+        return parseFloat((maxNetworkUsageAvailable / Math.pow(k, sizeOfIndex)).toFixed(decimals))
     }
 
     function convertNetworkUsagesToUnitSize(networkUsages:NetworkUsage[], variableName: string): number[] {
@@ -84,6 +89,23 @@
 
         getAndSetNetworkUsage(fromDate, toDate)
     }
+
+    let datasets = undefined
+    $: if (networkUsageOfServer)  {
+        datasets =
+            [
+                {
+                    values: convertNetworkUsagesToUnitSize(networkUsageOfServer, "uploadInBytes"),
+                    name: `Upload speed in ${currentUnitSize}`,
+                    type: 'line',
+                },
+                {
+                    values: convertNetworkUsagesToUnitSize(networkUsageOfServer, "downloadInBytes"),
+                    name: `Download speed in ${currentUnitSize}`,
+                    type: 'line',
+                },
+            ]
+    }
 </script>
 
 <article>
@@ -96,24 +118,12 @@
         <span>Failed to load network usage data</span>
     {/await}
 
-    {#if networkUsageOfServer}
+    {#if networkUsageOfServer && datasets}
         <DateTimeGraph
-                maxYValue="{getMaximumAvailableNetworkUsageCalculatedWithUnitType()}"
-                datasets={
-                    [
-                        {
-                            name: `Upload speed in ${currentUnitSize}`,
-                            type: 'line',
-                            values: convertNetworkUsagesToUnitSize(networkUsageOfServer, "uploadInBytes")
-                        },
-                        {
-                            name: `Download speed in ${currentUnitSize}`,
-                            type: 'line',
-                            values: convertNetworkUsagesToUnitSize(networkUsageOfServer, "downloadInBytes")
-                        },
-                    ]
-                }
-                y={networkUsageOfServer.map((networkUsage) => networkUsage.createdAt)}
+            maxYValue="{getMaximumAvailableNetworkUsageCalculatedWithUnitType()}"
+            y={networkUsageOfServer.map((networkUsage) => networkUsage.createdAt)}
+            datasets={datasets}
+            x={convertNetworkUsagesToUnitSize(networkUsageOfServer, "downloadInBytes")}
         />
         <span>If a point is blank that means there was no network usage for that given minute</span>
     {/if}

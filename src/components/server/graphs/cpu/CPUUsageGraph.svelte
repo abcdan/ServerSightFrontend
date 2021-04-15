@@ -25,6 +25,7 @@
     })
 
     function getAndSetCpuUsage(fromDate: Date, toDate: Date): void {
+        setGraphTimeText(fromDate, toDate)
         fetchingPromise = ServerCpuUsageService.getCpuUsageOfServer(server, {
             from: fromDate,
             to: toDate
@@ -54,7 +55,6 @@
         const fromDate = event.detail.fromDate
         const toDate = event.detail.toDate
 
-        setGraphTimeText(fromDate, toDate)
         getAndSetCpuUsage(fromDate, toDate)
     }
 </script>

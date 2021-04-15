@@ -22,7 +22,6 @@
     let graphTimeText: string = ''
 
     onMount(() => {
-        graphTimeText = 'past 5 minutes'
         let fromDate: Date = new Date()
         fromDate.setMinutes(fromDate.getMinutes() - 5)
         let toDate: Date = new Date()
@@ -30,6 +29,7 @@
     })
 
     function getAndSetNetworkUsage(fromDate:Date, toDate: Date): void {
+        setGraphTimeText(fromDate, toDate)
         fetchingPromise = ServerNetworkUsageService.getNetworkUsageOfServer(server, {
             from: fromDate,
             to: toDate
@@ -43,7 +43,7 @@
                 }
             ) as NetworkUsage[]
         }).catch((ex) => {
-            popUpMessageStore.addMessage('Could not fetch NetworkUSage usages.')
+            popUpMessageStore.addMessage('Could not fetch Network usages.')
         })
     }
 
@@ -95,7 +95,6 @@
         const fromDate = event.detail.fromDate
         const toDate = event.detail.toDate
 
-        setGraphTimeText(fromDate, toDate)
         getAndSetNetworkUsage(fromDate, toDate)
     }
 

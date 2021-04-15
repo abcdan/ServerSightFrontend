@@ -20,14 +20,13 @@
         max: maxYValue
     }
 
-    $: console.log(datasets)
     let chartData
-    $: if (y.length > 0 && x.length > 0) {
+    $: if ((y.length > 0 && x.length > 0) || datasets) {
         chartData = {
             // if there are more than 720 minutes then also display the date because it is bigger than a day.
             labels: y.length > 720  ?
                 y.map((date) => date.toLocaleString()):
-                y.map((date) => `${date.getHours()}:${date.getMinutes()}`),
+                y.map((date) => `${date.getHours()}:${date.getMinutes() < 9 ? '0' : ''}${date.getMinutes()}`),
             yMarkers: [
                 {
                     label: label,
@@ -35,7 +34,7 @@
                 }
             ],
             datasets:
-                x && label ?
+                x.length !== 0 ?
                  [
                     {
                         name: label,

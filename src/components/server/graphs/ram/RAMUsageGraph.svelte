@@ -75,11 +75,20 @@
             return parseFloat((ramUsage.usageInBytes / Math.pow(k, sizeOfIndex)).toFixed(dm));
         })
     }
+    function setGraphTimeText(fromDate: Date, toDate:Date) {
+        let t2 = toDate.getTime();
+        let t1 = fromDate.getTime();
+
+        let differenceInMinutes = parseInt(String((t2 - t1) / 60000));
+        graphTimeText = `past ${differenceInMinutes} minutes`
+
+    }
 
     function onNewSelectedTime(event): void {
         const fromDate = event.detail.fromDate
         const toDate = event.detail.toDate
 
+        setGraphTimeText(fromDate, toDate)
         getAndSetRamUsages(fromDate, toDate)
     }
 </script>

@@ -66,7 +66,6 @@
         // searches for the highest possible network usage available in current list
         const maxNetworkUsageAvailable = getMaximumAvailableNetworkUsageInBytes()
 
-        console.log(maxNetworkUsageAvailable)
         const sizeOfIndex = Math.floor(Math.log(maxNetworkUsageAvailable) / Math.log(k));
 
         return parseFloat((maxNetworkUsageAvailable / Math.pow(k, sizeOfIndex)).toFixed(decimals))
@@ -83,10 +82,20 @@
         })
     }
 
+    function setGraphTimeText(fromDate: Date, toDate:Date) {
+        let t2 = toDate.getTime();
+        let t1 = fromDate.getTime();
+
+        let differenceInMinutes = parseInt(String((t2 - t1) / 60000));
+        graphTimeText = `past ${differenceInMinutes} minutes`
+
+    }
+
     function onNewSelectedTime(event): void {
         const fromDate = event.detail.fromDate
         const toDate = event.detail.toDate
 
+        setGraphTimeText(fromDate, toDate)
         getAndSetNetworkUsage(fromDate, toDate)
     }
 
@@ -96,12 +105,12 @@
             [
                 {
                     values: convertNetworkUsagesToUnitSize(networkUsageOfServer, "uploadInBytes"),
-                    name: `Upload speed in ${currentUnitSize}`,
+                    name: `Upload in ${currentUnitSize}`,
                     type: 'line',
                 },
                 {
                     values: convertNetworkUsagesToUnitSize(networkUsageOfServer, "downloadInBytes"),
-                    name: `Download speed in ${currentUnitSize}`,
+                    name: `Download in ${currentUnitSize}`,
                     type: 'line',
                 },
             ]
@@ -122,8 +131,8 @@
         <DateTimeGraph
             maxYValue="{getMaximumAvailableNetworkUsageCalculatedWithUnitType()}"
             y={networkUsageOfServer.map((networkUsage) => networkUsage.createdAt)}
+            label={`Max network usage ${currentUnitSize}`}
             datasets={datasets}
-            x={convertNetworkUsagesToUnitSize(networkUsageOfServer, "downloadInBytes")}
         />
         <span>If a point is blank that means there was no network usage for that given minute</span>
     {/if}

@@ -1,5 +1,5 @@
 export interface NetworkUsage {
-    usageInBytes: number
-    totalAvailableInBytes: number
+    downloadInBytes: number,
+    uploadInBytes: number
     createdAt: Date;
 }

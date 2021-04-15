@@ -3,7 +3,10 @@
     import Chart from 'svelte-frappe-charts';
 
     export let y: Date[] = []
+    // for 1 line a chart
     export let x: number[] = []
+    // for multiple lines in a single chart
+    export let datasets: { name: string, values: number[]}[] = []
     export let maxYValue:number = 0;
     export let colors: string[] = ['#344966']
     export let label: string
@@ -17,6 +20,7 @@
         max: maxYValue
     }
 
+    $: console.log(datasets)
     let chartData
     $: if (y.length > 0 && x.length > 0) {
 
@@ -31,13 +35,16 @@
                     value: maxYValue,
                 }
             ],
-            datasets: [
-                {
-                    name: label,
-                    type: 'line',
-                    values: x,
-                }
-            ]
+            datasets:
+                x && label ?
+                 [
+                    {
+                        name: label,
+                        type: 'line',
+                        values: x,
+                    }
+                ]
+                : datasets
         }
     }
 </script>

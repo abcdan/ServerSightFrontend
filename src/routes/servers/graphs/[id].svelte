@@ -7,6 +7,7 @@
     import CPUUsageGraph from "../../../components/server/graphs/cpu/CPUUsageGraph.svelte";
     import RAMUsageGraph from "../../../components/server/graphs/ram/RAMUsageGraph.svelte";
     import ServerNavBar from "../../../components/server/ServerNavBar.svelte";
+    import NetworkUsageGraph from "../../../components/server/graphs/network-usage/NetworkUsageGraph.svelte";
 
     // getting server-id
     const {page} = stores();
@@ -60,6 +61,7 @@
         <section class="graphs">
             <CPUUsageGraph {server} />
             <RAMUsageGraph {server} />
+            <NetworkUsageGraph {server} />
         </section>
     </section>
 {/if}

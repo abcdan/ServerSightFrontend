@@ -10,7 +10,7 @@ export class ServerNetworkUsageService {
      * Every cpu usage in the list will be the CPU usage of every minute
      */
     static async getNetworkUsageOfServer(server: Server, timeBetween: CreatedBetweenDTO): Promise<CpuUsage[]> {
-        const networkUsagesObj = (await HttpClient.get(`servers/${server.id}/cpus`, parseCreatedBetweenToIsoString(timeBetween))).content
+        const networkUsagesObj = (await HttpClient.get(`servers/${server.id}/network-usages`, parseCreatedBetweenToIsoString(timeBetween))).content
         const networkUsages = networkUsagesObj as CpuUsage[]
         // convert all the dates correctly.
         networkUsages.map((networkUsage) => networkUsage.createdAt = new Date(networkUsage.createdAt))

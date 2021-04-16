@@ -15,6 +15,12 @@
         right: 0;
         bottom: 0;
     }
+
+    @media only screen and (max-width: 1000px) {
+        div {
+            top: 50px;
+        }
+    }
 </style>
 <main>
     <Nav {segment} />

@@ -105,6 +105,12 @@
             width: calc(100% - 20px);
         }
     }
+
+    @media only screen and (max-width: 1200px) {
+        div.container {
+            top: 50px
+        }
+    }
 </style>
 <svelte:head>
     <title>Your servers</title>

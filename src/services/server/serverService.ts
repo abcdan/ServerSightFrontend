@@ -57,7 +57,7 @@ export class ServerService {
     }
 
     static async deleteServer(server: Server): Promise<void> {
-        const response = await HttpClient.delete(`servers/${server.id}`)
+        const response = await HttpClient.delete(`servers/${server.id}`, {})
 
         const createdServer = response.content as Server
 

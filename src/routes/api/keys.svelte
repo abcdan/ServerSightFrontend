@@ -9,7 +9,6 @@
 
     let apiKeys: string[] = []
 
-    $: console.log(apiKeys)
     onMount(() => {
         ApiKeyService.getKeys().then((key) => {
             apiKeys = key
@@ -19,16 +18,17 @@
     })
 
     function createKey() {
-        ApiKeyService.setKey().then((key) => {
+        ApiKeyService.saveKey().then((key) => {
             popUpMessageStore.addMessage('New api key generated!')
             apiKeys = [key, ...apiKeys]
         })
     }
 
     function deleteKey(event) {
-        ApiKeyService.deleteKey(event.detail).then(() => {
+        const apiKeyToDelete = event.detail
+        ApiKeyService.deleteKey(apiKeyToDelete).then(() => {
             popUpMessageStore.addMessage('Api key deleted')
-            apiKeys = undefined
+            apiKeys = apiKeys.filter(apiKey => apiKey !== apiKeyToDelete)
         })
     }
 </script>
@@ -49,14 +49,10 @@
     <p>
         Here you can manage your api keys that will be used on your servers.
     </p>
+    <div transition:slide|local>
+        <Button on:click={createKey}>Create API key</Button>
+    </div>
     {#if apiKeys}
-        <div transition:slide|local>
-            <Button on:click={createKey}>Create API key</Button>
-        </div>
         <ApiKeyList on:delete={deleteKey} {apiKeys} />
-<!--        <div transition:slide|local>-->
-<!--            <p>API key: {apiKeys} </p>-->
-<!--            <Button on:click={deleteKey} backgroundColor="#721c24">Delete API key</Button>-->
-<!--        </div>-->
     {/if}
 </Container>

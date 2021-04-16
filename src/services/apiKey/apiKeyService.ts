@@ -3,8 +3,8 @@ import {httpResponseToLocalException} from "../httpClient/httpExceptionHandler";
 
 export class ApiKeyService
 {
-    static async setKey(): Promise<string> {
-        const response = await HttpClient.put('api/keys', {})
+    static async saveKey(): Promise<string> {
+        const response = await HttpClient.post('api/keys', {})
 
         if(response.statusCode === 200) {
             return (response.content as any).key;

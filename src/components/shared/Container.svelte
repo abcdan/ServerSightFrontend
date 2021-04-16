@@ -17,7 +17,7 @@
     }
 
     @media screen and (max-width: 1000px) {
-        section {
+        section.default, section.large {
             width: 90%;
         }
     }

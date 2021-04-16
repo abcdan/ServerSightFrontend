@@ -33,6 +33,12 @@
     div {
         margin-bottom: 12px;
     }
+
+    span {
+        display: block;
+        text-align: center;
+        padding-top: 5px;
+    }
 </style>
 
 <svelte:head>
@@ -40,12 +46,14 @@
 </svelte:head>
 
 <Container>
-    <h1>Register server sight</h1>
+    <h1>Register on Server Sight</h1>
     <p>
         Server sight is an application where you can document your servers and get insights to them.
         Register here to check it out!
     </p>
-    <Link href="auth/login">Already have an account?</Link>
+    <Link href="auth/login">
+        <span>Already have an account?</span>
+    </Link>
     <ErrorList fieldsErrors={fieldsErrors} />
     <form on:submit|preventDefault={submitRegister}>
         <div>

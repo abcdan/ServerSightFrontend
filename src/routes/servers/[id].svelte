@@ -198,6 +198,7 @@
             </div>
             <div class="header">
                 <h1>{server.name}</h1>
+                <p>Server id: <b>{server.id}</b></p>
                 <div class="inline">
                     <Button on:click={toggleEditMode}>{editMode ? 'View' : 'Edit' }</Button>
                 </div>

@@ -108,9 +108,9 @@
     {#if ramUsagesOfServer}
         <DateTimeGraph
             maxYValue="{getMaximumAvailableRAMCalculatedWithUnitType()}"
-            label="Maximum ram available in {currentUnitSize}"
             x={convertRAMUsageToUnitSize(ramUsagesOfServer)}
             y={ramUsagesOfServer.map((ramUsage) => ramUsage.createdAt)}
+            label={`Maximum ram available in ${currentUnitSize}`}
         />
         <span>If a point is blank that means there was no RAM usage for that given minute</span>
     {/if}

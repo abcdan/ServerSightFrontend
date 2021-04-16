@@ -21,8 +21,8 @@
 </script>
 
 <form on:submit|preventDefault>
-    <Input bind:value={ipSearch} labelTxt="Search by ip" placeholder="Search by ip" type="text" />
     <Input bind:value={nameSearch} labelTxt="Search by name" placeholder="Search by name" type="text" />
+    <Input bind:value={ipSearch} labelTxt="Search by ip" placeholder="Search by ip" type="text" />
 
     <label for="powerToggler">Power status</label>
     <Toggler id="powerToggler" bind:value={powerStatusToggle}>

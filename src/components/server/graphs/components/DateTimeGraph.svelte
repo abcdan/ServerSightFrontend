@@ -26,7 +26,7 @@
             // if there are more than 720 minutes then also display the date because it is bigger than a day.
             labels: y.length > 720  ?
                 y.map((date) => date.toLocaleString()):
-                y.map((date) => `${date.getHours()}:${date.getMinutes() < 9 ? '0' : ''}${date.getMinutes()}`),
+                y.map((date) => `${date.getHours()}:${date.getMinutes() <= 9 ? '0' : ''}${date.getMinutes()}`),
             yMarkers: [
                 {
                     label: label,

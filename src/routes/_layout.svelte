@@ -1,6 +1,6 @@
 <script lang="ts">
     import Nav from "../components/Nav.svelte";
-    import Popup from "../components/shared/Popup.svelte";
+    import Popup from "../components/popup/Popup.svelte";
     import {setup} from "../services/httpClient/httpRequestListener";
 
     setup()

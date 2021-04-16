@@ -25,6 +25,8 @@
         graphTimeText = 'past 5 minutes'
         let fromDate: Date = new Date()
         fromDate.setMinutes(fromDate.getMinutes() - 5)
+        fromDate.setSeconds(0)
+
         let toDate: Date = new Date()
         getAndSetRamUsages(fromDate, toDate)
     })

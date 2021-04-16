@@ -9,7 +9,7 @@
         messages = newMessages
     })
 
-    // remove last message every 3 seconds
+    // remove last message every 5 seconds
     setInterval(() => {
         popUpMessageStore.removeMessage(messages.length - 1)
     }, 5000)
@@ -34,9 +34,9 @@
         border-radius: 5px;
     }
 
-    @media only screen and (max-width: 1200px) {
+    @media only screen and (max-width: 1000px) {
         section {
-            top: 150px;
+            top: 50px;
             left: 20%;
             width: 60%;
         }

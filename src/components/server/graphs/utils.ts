@@ -1,5 +1,3 @@
-import type {CpuUsage} from "../../../models/server/cpuUsage";
-
 /**
  * Will fill a cpu usage if there is a CPU usage missing from a given minute.
  * For example you want to fetch the last 30 minutes but there are only 28 cpu usages.
@@ -18,9 +16,9 @@ export function fillEmptyTimestamps (existingArray: { createdAt: Date } [], star
     let arrayToFill: {}[] = []
 
     _generateAllDatesBetweenDates(startDate, endDate).forEach((generatedDate) => {
-        let cpuUsage = existingArray.find((cpuUsage) => _dateMatches(cpuUsage.createdAt, generatedDate))
-        if (cpuUsage) {
-            arrayToFill.push(cpuUsage)
+        let item = existingArray.find((item) => _dateMatches(item.createdAt, generatedDate))
+        if (item) {
+            arrayToFill.push(item)
         } else {
             arrayToFill.push(creationCallback(generatedDate))
         }

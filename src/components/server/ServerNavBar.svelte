@@ -21,7 +21,6 @@
     })
 
     function getActivationCssClass(route: string): string {
-        console.log(route)
         for (let i = 0; i < urlToActivation.length; i++){
             const path = urlToActivation[i];
             if(route.startsWith(path.url)) return  path.cssClass;

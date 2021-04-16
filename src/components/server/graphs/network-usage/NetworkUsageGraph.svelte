@@ -24,6 +24,8 @@
     onMount(() => {
         let fromDate: Date = new Date()
         fromDate.setMinutes(fromDate.getMinutes() - 5)
+        fromDate.setSeconds(0)
+
         let toDate: Date = new Date()
         getAndSetNetworkUsage(fromDate, toDate)
     })

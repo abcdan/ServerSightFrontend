@@ -113,17 +113,17 @@
         padding-left: 25px;
     }
 
-    div.icon, div.side-bar {
+    .icon, .side-bar {
         display: inline-block;
         width: 20%;
     }
 
-    div.icon {
+    .icon {
         position: relative;
         height: 100px;
     }
 
-    div.main-content {
+    .main-content {
         display: inline-block;
         vertical-align: top;
         width: 79%;
@@ -142,7 +142,7 @@
         font-weight: bold;
     }
 
-    div.header {
+    .header {
         width: auto;
         display: inline-block;
         vertical-align: top;
@@ -160,6 +160,23 @@
         vertical-align: bottom;
         width: 150px;
     }
+
+    @media only screen and (max-width: 1000px) {
+        .side-bar {
+            display: block;
+            width: 100%;
+            margin: 0;
+        }
+
+        .main-content {
+            display: block;
+            width: 100%;
+        }
+
+        details {
+            width: calc(100vw - 100px);
+        }
+    }
 </style>
 
 <svelte:head>
@@ -171,7 +188,7 @@
 <section class="container">
     {#if server}
         <ServerNavBar {server} />
-        <div>
+        <section>
             <div class="icon">
                 {#if server.imagePath}
                     <Img src={ BASE_MEDIA_URL + server.imagePath } alt={server.name} />
@@ -188,22 +205,22 @@
                     <Button on:click={deleteServer} backgroundColor="#721c24">Delete</Button>
                 </div>
             </div>
-        </div>
-        <div class="side-bar">
+        </section>
+        <section class="side-bar">
             <details>
-                <summary>Network adapters of server</summary>
+                <summary>Network adapters</summary>
                 <NetworkAdapterList {networkAdapters} />
             </details>
             <details>
-                <summary>Hard disks of server</summary>
+                <summary>Hard disks</summary>
                 <HardDiskList {hardDisks} />
             </details>
             <details>
-                <summary>Open server ports</summary>
+                <summary>Open ports</summary>
                 <PortList {ports} />
             </details>
-        </div>
-        <div class="main-content">
+        </section>
+        <section class="main-content">
             {#if editMode}
                 <div>
                     <ErrorList fieldsErrors={fieldsErrors} />
@@ -211,15 +228,14 @@
                         bind:server={server}
                         bind:serverIcon={serverIcon}
                     />
-                    <Button on:click={updateServer}>Save</Button>
+                    <Button on:click={updateServer}>Update</Button>
                 </div>
             {:else }
                 <h3>Server description:</h3>
                 <MarkdownViewer markdown={server.description} />
             {/if}
-        </div>
+        </section>
     {:else}
         <LoadingSpinner />
     {/if}
-
 </section>

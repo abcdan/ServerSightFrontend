@@ -5,28 +5,30 @@
     import {popUpMessageStore} from "../../stores/popupMessagesStore";
     import Container from "../../components/shared/Container.svelte";
     import {slide} from "svelte/transition";
+    import ApiKeyList from "../../components/api-keys/ApiKeyList.svelte";
 
-    let apiKey: string = undefined
+    let apiKeys: string[] = []
 
+    $: console.log(apiKeys)
     onMount(() => {
-        ApiKeyService.getKey().then((key) => {
-            apiKey = key
+        ApiKeyService.getKeys().then((key) => {
+            apiKeys = key
         }).catch((ignored) => {
-            // TODO handle
+            popUpMessageStore.addMessage('Failed to get keys. Try again later!')
         })
     })
 
     function createKey() {
         ApiKeyService.setKey().then((key) => {
             popUpMessageStore.addMessage('New api key generated!')
-            apiKey = key
+            apiKeys = [key, ...apiKeys]
         })
     }
 
-    function deleteKey() {
-        ApiKeyService.deleteKey().then(() => {
+    function deleteKey(event) {
+        ApiKeyService.deleteKey(event.detail).then(() => {
             popUpMessageStore.addMessage('Api key deleted')
-            apiKey = undefined
+            apiKeys = undefined
         })
     }
 </script>
@@ -34,19 +36,27 @@
 <svelte:head>
     <title>Api key management</title>
 </svelte:head>
+
+<style>
+    div {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+</style>
+
 <Container>
     <h1>Api keys</h1>
     <p>
         Here you can manage your api keys that will be used on your servers.
     </p>
-    {#if !apiKey}
+    {#if apiKeys}
         <div transition:slide|local>
             <Button on:click={createKey}>Create API key</Button>
         </div>
-    {:else}
-        <div transition:slide|local>
-            <p>API key: {apiKey} </p>
-            <Button on:click={deleteKey} backgroundColor="#721c24">Delete API key</Button>
-        </div>
+        <ApiKeyList on:delete={deleteKey} {apiKeys} />
+<!--        <div transition:slide|local>-->
+<!--            <p>API key: {apiKeys} </p>-->
+<!--            <Button on:click={deleteKey} backgroundColor="#721c24">Delete API key</Button>-->
+<!--        </div>-->
     {/if}
 </Container>

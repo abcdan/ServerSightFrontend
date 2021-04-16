@@ -85,10 +85,11 @@ export class HttpClient {
         }
     }
 
-    static async delete(relativeUrl: string): Promise<HttpResponse> {
+    static async delete(relativeUrl: string, data: Object): Promise<HttpResponse> {
         const response = await fetch(BASE_API_URL + relativeUrl, {
             method: 'DELETE',
             headers: this._getHeaders(),
+            body: JSON.stringify(data)
         })
 
         try {

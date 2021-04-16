@@ -7,6 +7,8 @@
     function onNewGraph(minutesFromNow: number, text: string): void {
         let fromDate: Date = new Date()
         fromDate.setMinutes(fromDate.getMinutes() - minutesFromNow)
+        fromDate.setSeconds(0)
+
         let toDate: Date = new Date()
 
         eventDispatcher('time-selected', {

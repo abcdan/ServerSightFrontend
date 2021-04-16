@@ -15,7 +15,11 @@
     })
 
     function getAllServers(): void {
-        serversFetchingPromise = ServerService.getUserServers().then((serversFetched) => servers = serversFetched)
+        serversFetchingPromise = ServerService.getUserServers().then((serversFetched) => {
+            if(serversFetched) {
+                servers = serversFetched
+            }
+        })
     }
 
     function onFilter(event): void {
@@ -27,6 +31,8 @@
             ip: filterData.ip
         }).then((serversFetched) => servers = serversFetched)
     }
+
+    $: servers
 </script>
 
 <style>

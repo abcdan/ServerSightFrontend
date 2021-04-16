@@ -37,4 +37,11 @@ export class Auth {
             throw httpResponseToLocalException(response)
         }
     }
+
+    /**
+       Logs out current user from the system by resetting its JWT key
+    */
+    static logoutUser() {
+        Jwt.setJwt("")
+    }
 }

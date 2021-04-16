@@ -9,8 +9,18 @@ export class ServerService {
      * Gets the servers of the current logged in user
      */
     static async getUserServers(searchQuery?: { name: string, powerstatus: boolean, ip: string}): Promise<Server[]> {
-        const servers = (await HttpClient.get('servers', searchQuery)).content
-        return servers as Server[]
+        try {
+            const response = (await HttpClient.get('servers', searchQuery))
+
+            if (response.statusCode === 200) {
+                return response.content as Server[]
+            } else {
+                httpResponseToLocalException(response)
+                return undefined
+            }
+        } catch (ignored) {
+            return undefined
+        }
     }
 
     static async getServer(serverId: string): Promise<Server> {

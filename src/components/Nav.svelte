@@ -109,7 +109,7 @@
         </SecondaryLink>
     </div>
     <div class="logout">
-        <SecondaryLink href="/servers">
+        <SecondaryLink href="/auth/logout">
             <span>Logout</span>
         </SecondaryLink>
     </div>

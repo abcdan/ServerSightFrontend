@@ -1,10 +1,35 @@
 <script lang="ts">
     import {stores} from "@sapper/app";
+    import {onMount} from "svelte";
 
     export let server;
     const {page} = stores();
-</script>
 
+    const urlToActivation = [
+        {
+            url: "/servers/graphs",
+            cssClass: "second-activated"
+        },
+        {
+            url: "/servers/events",
+            cssClass: "third-activated"
+        },
+    ]
+
+    onMount(() => {
+
+    })
+
+    function getActivationCssClass(route: string): string {
+        console.log(route)
+        for (let i = 0; i < urlToActivation.length; i++){
+            const path = urlToActivation[i];
+            if(route.startsWith(path.url)) return  path.cssClass;
+        }
+
+        return 'first-activated'
+    }
+</script>
 <style>
     section.container {
         width: 100%;
@@ -40,6 +65,10 @@
         margin-left: 25%;
     }
 
+    hr.third-activated, .third:hover ~ hr {
+        margin-left: 50%;
+    }
+
     hr {
         height: .32rem;
         width: 25%;
@@ -58,6 +87,9 @@
          <li class="second">
              <a href="/servers/graphs/{server.id}">Graphs</a>
          </li>
-         <hr class={$page.path.startsWith("/servers/graph") ? 'second-activated': ''} />
+        <li class="third">
+            <a href="/servers/events/{server.id}">Events</a>
+        </li>
+        <hr class={getActivationCssClass($page.path)} />
     </ul>
 </section>

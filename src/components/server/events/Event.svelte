@@ -14,29 +14,31 @@
     }
 
     div.img {
-        position: relative;
-        width: 98%;
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+        margin-right: 5px;
+        padding: 0;
+    }
+
+    div.container {
+        display: inline-block;
         margin: 0;
         padding: 0;
     }
 
-    span, h1 {
+    span {
         text-align: left;
         display: block;
         padding-top: 5px;
     }
-
-    div {
-        text-align: center;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
 </style>
 <article>
     <div class="img">
-        <!--   TODO set icon for event type     -->
         <EventIcon {event} />
     </div>
-    <span>{event.description}</span>
-    <span>Event occured: {event.createdAt.toLocaleString()}</span>
+    <div class="container">
+        <span>{event.description}</span>
+        <span>Event occurred at: {event.createdAt.toLocaleString()}</span>
+    </div>
 </article>

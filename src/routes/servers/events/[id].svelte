@@ -18,8 +18,6 @@
         server = await ServerService.getServer(id);
         serverEvents = await ServerEventService.getEventsOfServer(server)
     })
-
-    $: console.log(serverEvents)
 </script>
 
 <style>
@@ -41,7 +39,7 @@
         <h1>All the events of the {server.name}</h1>
         {#if serverEvents}
             <EventList
-                    events={serverEvents}
+                events={serverEvents}
             />
         {/if}
     </section>

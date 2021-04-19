@@ -5,7 +5,7 @@
     export let events: ServerEvent[]
 </script>
 <style>
-    ol {
+    ul {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
         grid-gap: 25px;
@@ -13,8 +13,8 @@
         padding: 0;
     }
 </style>
-<ol>
+<ul>
     {#each events as event}
         <Event event={event} />
     {/each}
-</ol>
+</ul>

@@ -13,7 +13,7 @@
 </script>
 
 <style>
-    ol {
+    ul {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         list-style-type: none;
@@ -22,18 +22,18 @@
         padding: 0;
     }
     @media only screen and (max-width: 1200px) {
-        ol {
+        ul {
             grid-template-columns: 1fr 1fr;
         }
     }
     @media only screen and (max-width: 800px) {
-        ol {
+        ul {
             grid-template-columns: 1fr;
         }
     }
 </style>
 
-<ol>
+<ul>
     {#key ready}
         {#each servers as server}
                 <li transition:fly|local={{ y: 100, duration: 500 }}>
@@ -43,4 +43,4 @@
                 </li>
         {/each}
     {/key}
-</ol>
+</ul>

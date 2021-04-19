@@ -5,10 +5,10 @@
     export let hardDisks: HardDiskServer[] = []
 </script>
 
-<ol>
+<ul>
     {#each hardDisks as hardDisk}
         <li>
             <HardDisk {hardDisk} />
         </li>
     {/each}
-</ol>
+</ul>

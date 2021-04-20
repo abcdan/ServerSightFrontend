@@ -4,10 +4,10 @@
 
 <style>
     a {
-        text-decoration: none;
-        vertical-align: middle;
         outline: none;
         display: block;
+        text-decoration: none;
+        vertical-align: middle;
         width: 100%;
         height: 40px;
         background-color: #344966;
@@ -19,6 +19,13 @@
 
     a:hover {
         cursor: pointer;
+        animation: toblock 1s infinite;
+    }
+
+    @keyframes toblock {
+        to {
+            box-shadow: 10px 10px 10px 10px white inset;
+        }
     }
 </style>
 

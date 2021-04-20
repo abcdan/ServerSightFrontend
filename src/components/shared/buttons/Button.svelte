@@ -9,8 +9,8 @@
         display: block;
         width: 100%;
         height: 40px;
-        background-color: #344966;
-        color: #F0F4EF;
+        background-color: var(--background-color);
+        color: var(--main-color);
         text-align: center;
         border: none;
         border-radius: 5px;
@@ -20,9 +20,16 @@
 
     button:hover {
         cursor: pointer;
+        animation: toblock 1s ease-in-out;
+    }
+
+    @keyframes toblock {
+        to {
+            border: 10px solid var(--background-color);
+        }
     }
 </style>
 
-<button on:click style="color: {color}; background-color: {backgroundColor}">
+<button on:click style="--background-color: {backgroundColor}; --main-color: {color};">
     <slot />
 </button>

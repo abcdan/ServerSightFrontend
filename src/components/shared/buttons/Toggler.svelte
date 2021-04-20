@@ -37,6 +37,18 @@
     button.false > span {
         color: black;
     }
+
+    button:hover {
+        cursor: pointer;
+        animation: toblock 1s ease-out;
+        -webkit-animation: toblock 1s infinite;
+    }
+
+    @keyframes toblock {
+        to {
+            border: 10px solid #344966;
+        }
+    }
 </style>
 
 {#key value}

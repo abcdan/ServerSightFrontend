@@ -19,12 +19,12 @@
 
     a:hover {
         cursor: pointer;
-        animation: toblock 1s infinite;
+        animation: toblock 1s ease-in-out;
     }
 
     @keyframes toblock {
         to {
-            box-shadow: 10px 10px 10px 10px white inset;
+
         }
     }
 </style>

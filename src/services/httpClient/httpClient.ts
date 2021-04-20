@@ -1,4 +1,4 @@
-import {BASE_API_URL} from "../../configs";
+import {BASE_API_URL} from "../../config";
 import type {HttpResponse} from "./httpResponse";
 import {Jwt} from "../auth/jwt";
 import {httpResponseStore} from "../../stores/httpResponseStore";

@@ -2,8 +2,10 @@
     import Nav from "../components/Nav.svelte";
     import Popup from "../components/popup/Popup.svelte";
     import {setup} from "../services/httpClient/httpRequestListener";
+    import {onMount} from "svelte";
 
     setup()
+
     export let segment;
 </script>
 

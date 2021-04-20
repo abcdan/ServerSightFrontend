@@ -7,7 +7,7 @@
     import Img from "../../components/shared/Img.svelte";
     import Container from "../../components/shared/Container.svelte";
     import Button from "../../components/shared/buttons/Button.svelte";
-    import {BASE_MEDIA_URL} from "../../configs";
+    import {BASE_MEDIA_URL} from "../../config";
     import ServerForm from "../../components/server/ServerForm.svelte";
     import type {FieldError} from "../../services/error/field.error";
     import ErrorList from "../../components/errors/ErrorList.svelte";

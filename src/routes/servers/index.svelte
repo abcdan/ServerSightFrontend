@@ -104,7 +104,7 @@
 
         section.servers-list {
             position: relative;
-            height: calc(100% - 525px);
+            height: calc(100% - 550px);
         }
 
         section.servers-list, section.server-filter {

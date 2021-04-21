@@ -72,7 +72,7 @@
         </header>
         <div class="post-script-wrapper">
             <PostScriptSetupGuide />
-        </div> />
+        </div>
         <section class="graphs">
             <CPUUsageGraph {server} />
             <RAMUsageGraph {server} />

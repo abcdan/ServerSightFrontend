@@ -120,7 +120,7 @@
         <img on:click={() => expanded = !expanded} src="/hamburger-icon.svg" alt="hamburger icon" />
     </div>
     {#if expanded}
-        <div class="mobile-container" transition:fly|local>
+        <div class="mobile-container" transition:fly|local on:click={() => {expanded=false}}>
             <div class="mobile-item">
                 <SecondaryLink href="/servers">
                     <span>Your servers</span>

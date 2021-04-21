@@ -104,15 +104,15 @@
 
         section.servers-list {
             position: relative;
+            height: calc(100% - 525px);
         }
+
         section.servers-list, section.server-filter {
             border: none;
             display: block;
             width: calc(100% - 20px);
         }
-    }
 
-    @media only screen and (max-width: 1200px) {
         div.container {
             top: 50px
         }

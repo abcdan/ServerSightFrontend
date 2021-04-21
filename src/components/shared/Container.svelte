@@ -18,6 +18,7 @@
 
     @media screen and (max-width: 1000px) {
         section.default, section.large {
+            padding-top: 10px;
             width: 90%;
         }
     }

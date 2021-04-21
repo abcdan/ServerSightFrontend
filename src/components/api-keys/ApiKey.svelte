@@ -22,8 +22,8 @@
         font-size: 18px;
     }
     .button-wrapper {
-        margin-left: 10px;
-        width: 200px;
+        margin-left: auto;
+        width: 10rem;
     }
 </style>
 <article>

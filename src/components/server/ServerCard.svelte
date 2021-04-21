@@ -48,7 +48,7 @@
     <span>Server power: {server.powerStatus ? 'on': 'off'}</span>
     <div>
         <Link href="/servers/{server.id}">
-            <span>View {server.name} server</span>
+            <span>View server</span>
         </Link>
     </div>
 </article>

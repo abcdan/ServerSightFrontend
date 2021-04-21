@@ -20,7 +20,7 @@
 
 <article>
     <span>
-        Not showing any data? You can start adding your system information by clicking the link below.
+        Not showing any data? Click the link below to add your system.
     </span>
     <div class="link-wrapper">
         <Link href="https://github.com/lukasvdberk/ServerSightPostScript/">

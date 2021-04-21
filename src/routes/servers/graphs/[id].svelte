@@ -8,6 +8,8 @@
     import RAMUsageGraph from "../../../components/server/graphs/ram/RAMUsageGraph.svelte";
     import ServerNavBar from "../../../components/server/ServerNavBar.svelte";
     import NetworkUsageGraph from "../../../components/server/graphs/network-usage/NetworkUsageGraph.svelte";
+    import Link from "../../../components/shared/buttons/Link.svelte";
+    import PostScriptSetupGuide from "../../../components/server/PostScriptSetupGuide.svelte";
 
     // getting server-id
     const {page} = stores();
@@ -43,6 +45,16 @@
         margin: 0;
         padding: 0;
     }
+
+    .post-script-wrapper {
+        width: 800px;
+    }
+
+    @media screen and (max-width: 1000px) {
+        .post-script-wrapper {
+            width: 100%;
+        }
+    }
 </style>
 
 <svelte:head>
@@ -58,6 +70,9 @@
         <header>
             <h1>Graphs of {server.name} server</h1>
         </header>
+        <div class="post-script-wrapper">
+            <PostScriptSetupGuide />
+        </div> />
         <section class="graphs">
             <CPUUsageGraph {server} />
             <RAMUsageGraph {server} />

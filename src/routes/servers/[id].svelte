@@ -24,6 +24,8 @@
     import {ServerPortService} from "../../services/server/serverPortService";
     import PortList from "../../components/server/ports/PortList.svelte";
     import ServerNavBar from "../../components/server/ServerNavBar.svelte";
+    import Link from "../../components/shared/buttons/Link.svelte";
+    import PostScriptSetupGuide from "../../components/server/PostScriptSetupGuide.svelte";
 
 
     const {page} = stores();
@@ -212,6 +214,7 @@
             </div>
         </section>
         <section class="side-bar">
+            <PostScriptSetupGuide />
             <details>
                 <summary>Network adapters</summary>
                 <NetworkAdapterList {networkAdapters} />

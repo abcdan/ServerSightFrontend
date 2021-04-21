@@ -105,7 +105,12 @@
     </div>
     <div class="pages">
         <SecondaryLink href="/api/keys">
-            <span>Api key management</span>
+            <span>API key management</span>
+        </SecondaryLink>
+    </div>
+    <div class="pages">
+        <SecondaryLink href="https://serversight.lukas.sh/swagger/index.html">
+            <span>API Documentation</span>
         </SecondaryLink>
     </div>
     <div class="logout">
@@ -128,7 +133,12 @@
             </div>
             <div class="mobile-item">
                 <SecondaryLink href="/api/keys">
-                    <span>Api key management</span>
+                    <span>API key management</span>
+                </SecondaryLink>
+            </div>
+            <div class="mobile-item">
+                <SecondaryLink href="https://serversight.lukas.sh/swagger/index.html">
+                    <span>API Documentation</span>
                 </SecondaryLink>
             </div>
             <div class="mobile-item">

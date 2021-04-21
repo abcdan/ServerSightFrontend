@@ -168,6 +168,10 @@
             margin: 0;
         }
 
+        .header {
+            margin-bottom: 10px;
+        }
+
         .main-content {
             display: block;
             width: 100%;

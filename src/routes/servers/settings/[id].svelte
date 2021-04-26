@@ -69,7 +69,9 @@
 
     @media screen and (max-width: 1000px) {
         .settings {
-            width: 100%;
+            width: auto;
+            margin-left: 10px;
+            margin-right: 10px;
         }
     }
 </style>

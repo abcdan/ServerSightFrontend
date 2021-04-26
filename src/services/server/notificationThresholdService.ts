@@ -25,7 +25,7 @@ export class NotificationThresholdService {
      * @param notificationThreshold - All properties need to be a value of 0 to a 100 (so in percentage).
      */
     static async saveNotificationThreshold(server: Server, notificationThreshold: NotificationThresHold): Promise<void> {
-        const response = await HttpClient.post(`servers/${server.id}/notifications/threshold`, notificationThreshold)
+        const response = await HttpClient.put(`servers/${server.id}/notifications/threshold`, notificationThreshold)
 
         if(response.statusCode === 204) {
             return

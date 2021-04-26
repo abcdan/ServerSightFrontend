@@ -14,6 +14,10 @@
             url: "/servers/events",
             cssClass: "third-activated"
         },
+        {
+            url: "/servers/settings",
+            cssClass: "fourth-activated"
+        },
     ]
 
     onMount(() => {
@@ -49,7 +53,7 @@
 
     a {
         display: inline-block;
-        width: 25%;
+        width: 24.5%;
         padding: .75rem 0;
         margin: 0;
         text-decoration: none;
@@ -66,6 +70,10 @@
 
     hr.third-activated, .third:hover ~ hr {
         margin-left: 50%;
+    }
+
+    hr.fourth-activated, .fourth:hover ~ hr {
+        margin-left: 75%;
     }
 
     hr {
@@ -88,6 +96,9 @@
          </li>
         <li class="third">
             <a href="/servers/events/{server.id}">Events</a>
+        </li>
+        <li class="fourth">
+            <a href="/servers/settings/{server.id}">Settings</a>
         </li>
         <hr class={getActivationCssClass($page.path)} />
     </ul>

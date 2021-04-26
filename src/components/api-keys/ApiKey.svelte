@@ -21,6 +21,7 @@
     span {
         font-size: 18px;
     }
+
     .button-wrapper {
         margin-left: auto;
         width: 10rem;

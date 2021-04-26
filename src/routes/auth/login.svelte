@@ -24,10 +24,12 @@
     let fieldsErrors: FieldError[] = []
 
     function submitLogin(): void {
-        Auth.login(user).then(async () => {
+        Auth.login(user).then(() => {
             fieldsErrors = []
 
-            await FirebaseDeviceService.registerFirebaseDevice(await getFirebaseConfig())
+            getFirebaseConfig().then((firebaseConfig) => {
+                FirebaseDeviceService.registerFirebaseDevice(firebaseConfig).then()
+            })
             goto('/servers', {});
         }).catch((err) => {
             console.log(err)

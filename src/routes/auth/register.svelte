@@ -73,7 +73,7 @@
             <AuthForm on:value={(newUser) => user = newUser.detail}/>
         </div>
         <div>
-            <Button on:click={submitRegister}>
+            <Button>
                 Register
             </Button>
         </div>

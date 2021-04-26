@@ -59,7 +59,7 @@
             <AuthForm on:value={(newUser) => user = newUser.detail}/>
         </div>
         <div>
-            <Button on:click={submitLogin}>
+            <Button>
                 Login
             </Button>
         </div>

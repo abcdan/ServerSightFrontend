@@ -1,13 +1,15 @@
 <script lang="ts">
     import {goto} from '@sapper/app';
     import Button from "../../components/shared/buttons/Button.svelte";
-    import type {User} from "../../models/user";
+    import type {User} from "../../models/user/user";
     import {Auth} from "../../services/auth/auth";
     import {FieldsErrors} from "../../services/error/fields.error";
     import {FieldError} from "../../services/error/field.error";
     import AuthForm from "../../components/auth/AuthForm.svelte";
     import Container from "../../components/shared/Container.svelte";
     import ErrorList from "../../components/errors/ErrorList.svelte";
+    import {setupFirebase} from "../../services/firebase/setupFirebase";
+    import {FirebaseDeviceService} from "../../services/firebase/firebaseDevice";
 
     let user: User = {
         email: '',
@@ -16,9 +18,10 @@
     let fieldsErrors: FieldError[] = []
 
     function submitLogin(): void {
-        Auth.login(user).then(() => {
+        Auth.login(user).then(async () => {
             fieldsErrors = []
-            goto('/servers', {});
+            await FirebaseDeviceService.registerFirebaseDevice(await setupFirebase())
+            await goto('/servers', {});
         }).catch((err) => {
             if (err instanceof FieldsErrors) {
                 fieldsErrors = (err as FieldsErrors).fields

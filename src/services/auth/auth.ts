@@ -1,4 +1,4 @@
-import type {User} from "../../models/user";
+import type {User} from "../../models/user/user";
 import {HttpClient} from "../httpClient/httpClient";
 import {FieldError} from "../error/field.error";
 import {FieldsErrors} from "../error/fields.error";

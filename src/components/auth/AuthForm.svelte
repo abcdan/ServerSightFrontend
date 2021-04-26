@@ -1,6 +1,6 @@
 <script lang="ts">
     import Input from "../shared/Input.svelte";
-    import type {User} from "../../models/user";
+    import type {User} from "../../models/user/user";
     import {createEventDispatcher} from "svelte";
 
     let user: User = {

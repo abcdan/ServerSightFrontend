@@ -4,13 +4,19 @@
     import type {User} from "../../models/user/user";
     import {Auth} from "../../services/auth/auth";
     import {FieldsErrors} from "../../services/error/fields.error";
-    import {FieldError} from "../../services/error/field.error";
+    import type {FieldError} from "../../services/error/field.error";
     import AuthForm from "../../components/auth/AuthForm.svelte";
     import Container from "../../components/shared/Container.svelte";
     import ErrorList from "../../components/errors/ErrorList.svelte";
-    import {setupFirebase} from "../../services/firebase/setupFirebase";
     import {FirebaseDeviceService} from "../../services/firebase/firebaseDevice";
+    import {onMount} from "svelte";
 
+    let getFirebaseConfig
+
+    onMount(async() => {
+        const firebaseSetupModule = await import("../../services/firebase/getFirebaseConfig");
+        getFirebaseConfig = firebaseSetupModule.getFirebaseConfig
+    })
     let user: User = {
         email: '',
         password: ''
@@ -20,9 +26,12 @@
     function submitLogin(): void {
         Auth.login(user).then(async () => {
             fieldsErrors = []
-            await FirebaseDeviceService.registerFirebaseDevice(await setupFirebase())
-            await goto('/servers', {});
+
+            await FirebaseDeviceService.registerFirebaseDevice(await getFirebaseConfig())
+            goto('/servers', {});
         }).catch((err) => {
+            console.log(err)
+
             if (err instanceof FieldsErrors) {
                 fieldsErrors = (err as FieldsErrors).fields
             }

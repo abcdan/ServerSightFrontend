@@ -9,8 +9,14 @@
     import Container from "../../components/shared/Container.svelte";
     import ErrorList from "../../components/errors/ErrorList.svelte";
     import Link from "../../components/shared/buttons/Link.svelte";
-    import {FirebaseDevice, FirebaseDeviceService} from "../../services/firebase/firebaseDevice";
-    import {setupFirebase} from "../../services/firebase/setupFirebase";
+    import {FirebaseDeviceService} from "../../services/firebase/firebaseDevice";
+    import {onMount} from "svelte";
+    let getFirebaseConfig
+
+    onMount(async() => {
+        const firebaseSetupModule = await import("../../services/firebase/getFirebaseConfig");
+        getFirebaseConfig = firebaseSetupModule.getFirebaseConfig
+    })
 
     let user: User = {
         email: '',
@@ -22,8 +28,8 @@
     function submitRegister(): void {
         Auth.register(user).then(async () => {
             fieldsErrors = []
-            await FirebaseDeviceService.registerFirebaseDevice(await setupFirebase())
-            await goto('/servers', {});
+            await FirebaseDeviceService.registerFirebaseDevice(await getFirebaseConfig())
+            goto('/servers', {});
         }).catch((err) => {
             if (err instanceof FieldsErrors) {
                 fieldsErrors = (err as FieldsErrors).fields

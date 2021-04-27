@@ -1,5 +1,6 @@
 importScripts('https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/8.4.2/firebase-messaging.js');
+importScripts('./firebaseConfig.json');
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('../firebase-messaging-sw.js')

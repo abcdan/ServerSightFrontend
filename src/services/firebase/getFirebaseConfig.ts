@@ -11,7 +11,7 @@ const pushNotificationsVapidKey = "BJjESW8nbMJRMsGtljjEaOTQI00Idcvd93ugfiPNOIZOQ
 /**
  * Sets up firebase (currently only used for notifications)
  */
-export async function getFirebaseConfig(): Promise<FirebaseDevice> {
+export async function getFirebaseDevice(): Promise<FirebaseDevice> {
     const deviceKey = await _getMessagingToken()
 
     return {

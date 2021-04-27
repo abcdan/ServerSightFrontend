@@ -15,7 +15,7 @@
 
     onMount(async() => {
         const firebaseSetupModule = await import("../../services/firebase/getFirebaseConfig");
-        getFirebaseConfig = firebaseSetupModule.getFirebaseConfig
+        getFirebaseConfig = firebaseSetupModule.getFirebaseDevice
     })
     let user: User = {
         email: '',
@@ -32,8 +32,6 @@
             })
             goto('/servers', {});
         }).catch((err) => {
-            console.log(err)
-
             if (err instanceof FieldsErrors) {
                 fieldsErrors = (err as FieldsErrors).fields
             }

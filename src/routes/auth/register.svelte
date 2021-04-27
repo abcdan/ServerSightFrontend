@@ -15,7 +15,7 @@
 
     onMount(async() => {
         const firebaseSetupModule = await import("../../services/firebase/getFirebaseConfig");
-        getFirebaseConfig = firebaseSetupModule.getFirebaseConfig
+        getFirebaseConfig = firebaseSetupModule.getFirebaseDevice
     })
 
     let user: User = {

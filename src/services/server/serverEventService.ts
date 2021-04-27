@@ -10,7 +10,7 @@ export class ServerEventService {
     static async getEventsOfServer(server: Server): Promise<ServerEvent[]> {
         const serverEventsObj = (await HttpClient.get(`servers/${server.id}/events`)).content
         const serverEvents = serverEventsObj as ServerEvent[]
-        console.log(serverEvents)
+
         // convert all the dates correctly.
         serverEvents.map((serverEvent) => serverEvent.createdAt = new Date(serverEvent.createdAt))
         serverEvents.map((serverEvent) => serverEvent.eventType = this._setEventType(serverEvent))

@@ -4,7 +4,13 @@
     import {setup} from "../services/httpClient/httpRequestListener";
     import {onMount} from "svelte";
 
-    setup()
+    onMount(async() => {
+        // import needs to be like this else the wrong firebase will be initialized
+        const firebaseSetupModule = await import("../services/firebase/firebaseMessenger");
+        firebaseSetupModule.setupMessagingNotificationReceiver()
+
+        setup()
+    })
 
     export let segment;
 </script>

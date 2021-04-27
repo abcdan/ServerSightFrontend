@@ -1,6 +1,6 @@
 <script lang="ts">
     import ApiKey from "./ApiKey.svelte";
-    import {fade, fly} from "svelte/transition";
+    import {fly} from "svelte/transition";
 
     export let apiKeys: string[]
 </script>

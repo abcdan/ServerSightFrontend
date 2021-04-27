@@ -1,10 +1,11 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import "firebase/messaging";
 import type {FirebaseDevice} from "../../models/user/firebaseDevice";
 import "firebase/auth";
 import "firebase/firestore";
+import {popUpMessageStore} from "../../stores/popupMessagesStore";
 
-const firebaseImpl = (process as any).browser ? firebase : require('firebase');
+// const firebaseImpl = (process as any).browser ? firebase : require('firebase');
 
 const firebaseConfig = {
     apiKey: "AIzaSyD9-rDXwOVcD51EJvGebzZTXBxx16vfzj8",
@@ -21,21 +22,23 @@ const pushNotificationsVapidKey = "BJjESW8nbMJRMsGtljjEaOTQI00Idcvd93ugfiPNOIZOQ
  * Sets up firebase (currently only used for notifications)
  */
 export async function getFirebaseConfig(): Promise<FirebaseDevice> {
-    // Your web app's Firebase configuration
-    // Initialize Firebase
-    if (!firebase.apps.length) {
-        firebaseImpl.initializeApp(firebaseConfig);
-    }else {
-        firebaseImpl.app(); // if already initialized, use that one
-    }
+    const deviceKey = await _getMessagingToken()
+    console.log(deviceKey)
 
     return {
-        deviceKey: await _getMessagingToken()
+        deviceKey: deviceKey
     }
 }
 
+export function getFirebaseInstance() {
+    if (!firebase.apps.length) {
+        return firebase.initializeApp(firebaseConfig);
+    }
+    return firebase.app();
+}
+
 async function _getMessagingToken(): Promise<string> {
-    const messaging = firebaseImpl.messaging()
+    const messaging = getFirebaseInstance().messaging()
 
     return await messaging.getToken({ vapidKey: pushNotificationsVapidKey })
 }

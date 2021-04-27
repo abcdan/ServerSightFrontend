@@ -45,7 +45,7 @@
     </div>
     <h1>{server.name}</h1>
     <!--TODO add badge-->
-    <span>Server power: {server.powerStatus ? 'on': 'off'}</span>
+    <span>Server power status: {server.powerStatus ? 'on': 'off'}</span>
     <div>
         <Link href="/servers/{server.id}">
             <span>View server</span>

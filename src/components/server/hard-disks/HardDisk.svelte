@@ -24,13 +24,27 @@
         background-color: #344966;
         box-shadow: 0 3px 6px #344966 inset;
         border-radius: 5px;
+        color: #344966;
+    }
+
+    p {
+        padding: 0;
+        margin-top: 1px;
+        text-overflow: ellipsis;
     }
 </style>
-<pre>
-Disk name: {hardDisk.diskName}
-Consumed space: {formatBytes(hardDisk.spaceAvailable)}
-Total space: {formatBytes(hardDisk.spaceTotal)}
-</pre>
+<p>
+    Disk name: {hardDisk.diskName}
+</p>
+<p>
+    Used: {formatBytes(hardDisk.spaceTotal - hardDisk.spaceAvailable)}
+</p>
+<p>
+    Available: {formatBytes(hardDisk.spaceAvailable)}
+</p>
+<p>
+    Total: {formatBytes(hardDisk.spaceTotal)}
+</p>
 <article>
     Space available:
     <progress value={percentageAvailable}>

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { slide } from 'svelte/transition';
+    import { fly } from 'svelte/transition';
 
     import { popUpMessageStore } from "../../stores/popupMessagesStore";
 
@@ -19,8 +19,8 @@
     section {
         position: absolute;
         top: 80px;
-        left: 30%;
-        width: 40%;
+        left: 20%;
+        width: 60%;
         margin: 0 auto;
         height: 20vh;
         z-index: 100;
@@ -30,15 +30,15 @@
         margin-bottom: 5px;
         padding: 5px;
         background-color: #F0F4EF;
-        border: 1px solid #344966;
+        box-shadow: 0 1px 1px 0 rgba(0,0,0,0.07),0 3px 1px -2px rgba(0,0,0,0.6),0 1px 5px 0 rgba(0,0,0,0.2);
         border-radius: 5px;
     }
 
     @media only screen and (max-width: 1000px) {
         section {
             top: 50px;
-            left: 20%;
-            width: 60%;
+            left: 10%;
+            width: 80%;
         }
     }
 </style>
@@ -46,7 +46,7 @@
 {#if messages.length > 0}
     <section>
         {#each messages as message}
-            <div transition:slide|local>
+            <div transition:fly|local={{duration: 500}}>
                 <b>{ message }</b>
             </div>
         {/each}

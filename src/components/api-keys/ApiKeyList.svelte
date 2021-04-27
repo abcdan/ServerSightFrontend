@@ -1,6 +1,6 @@
 <script lang="ts">
     import ApiKey from "./ApiKey.svelte";
-    import {fade} from "svelte/transition";
+    import {fade, fly} from "svelte/transition";
 
     export let apiKeys: string[]
 </script>
@@ -11,8 +11,8 @@
     }
 </style>
 
-{#each apiKeys as apiKey}
-    <div transition:fade>
+{#each apiKeys as apiKey (apiKey)}
+    <div in:fly={{duration: 500}} out:fly={{duration: 500}}>
         <ApiKey on:delete {apiKey} />
     </div>
 {/each}

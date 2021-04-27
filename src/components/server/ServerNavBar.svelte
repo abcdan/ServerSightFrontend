@@ -60,8 +60,7 @@
         color: #333;
     }
 
-    .first:hover ~ hr {
-        margin-left: 0;
+    .first:hover ~ hr {        margin-left: 0;
     }
 
     hr.second-activated, .second:hover ~ hr {

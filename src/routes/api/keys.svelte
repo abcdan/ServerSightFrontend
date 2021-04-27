@@ -44,7 +44,7 @@
     }
 </style>
 
-<Container>
+<Container cssClass="large">
     <h1>Api keys</h1>
     <p>
         Here you can manage your api keys that will be used on your servers.

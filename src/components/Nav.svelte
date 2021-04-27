@@ -58,6 +58,7 @@
 
     div.logo {
         height: 75px;
+        width: 75px;
         margin: 0 !important;
     }
 

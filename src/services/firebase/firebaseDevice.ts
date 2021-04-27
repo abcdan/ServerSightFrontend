@@ -7,7 +7,7 @@ export class FirebaseDeviceService {
      * Every cpu usage in the list will be the CPU usage of every minute
      */
     static async registerFirebaseDevice(firebaseDevice): Promise<void> {
-        const response = await HttpClient.post('user/firebase-devices', firebaseDevice)
+        const response = await HttpClient.post('users/firebase-devices', firebaseDevice)
 
         if(response.statusCode === 204) {
             return

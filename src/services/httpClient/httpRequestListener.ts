@@ -24,7 +24,7 @@ export function setup() {
 function onEveryRequest(response: HttpResponse): void {
     if(response.statusCode !== 401) {
         // get a new jwt every request to keep it fresh.
-        HttpClient.get('user/refresh-jwt',{},  true).then((response) => {
+        HttpClient.get('users/refresh-jwt',{},  true).then((response) => {
             if(response.statusCode === 401) on401(response)
             Jwt.setJwt((response.content as any).token)
         })

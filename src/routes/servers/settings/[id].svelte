@@ -4,12 +4,11 @@
     import {onMount} from "svelte";
     import {ServerService} from "../../../services/server/serverService";
     import {popUpMessageStore} from "../../../stores/popupMessagesStore";
-    import TresholdSettings from "../../../components/server/settings/notification-threshold/ThresholdSettings.svelte";
+    import ThresholdSettings from "../../../components/server/settings/notification-threshold/ThresholdSettings.svelte";
     import {NotificationThresholdService} from "../../../services/server/notificationThresholdService";
     import LoadingSpinner from "../../../components/shared/LoadingSpinner.svelte";
     import {stores} from "@sapper/app";
     import ServerNavBar from "../../../components/server/ServerNavBar.svelte";
-    import Container from "../../../components/shared/Container.svelte";
     import Button from "../../../components/shared/buttons/Button.svelte";
 
     const {page} = stores();
@@ -92,7 +91,7 @@
             Here you can set when you should receive a notification for this server when a certain threshold is reached.
         </p>
         {#if notificationThreshold}
-            <TresholdSettings bind:notificationsThresHold={notificationThreshold} />
+            <ThresholdSettings bind:notificationsThresHold={notificationThreshold} />
         {/if}
         <Button on:click={saveThreshold}>
             Save threshold settings

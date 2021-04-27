@@ -55,7 +55,6 @@
             placeholder="Enter your description / documentation for this server (with markdown support)."
         />
     </div>
-    <!-- TODO add image upload button -->
     <div>
         <label>
             Server icon:

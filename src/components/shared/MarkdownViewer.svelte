@@ -4,7 +4,5 @@
 </script>
 
 <div>
-    <!-- TODO seperate component -->
-
-            {@html marked(markdown)}
+    {@html marked(markdown)}
 </div>

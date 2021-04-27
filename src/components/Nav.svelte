@@ -142,7 +142,7 @@
                 </SecondaryLink>
             </div>
             <div class="mobile-item">
-                <SecondaryLink href="/servers">
+                <SecondaryLink href="/auth/logout">
                     <span>Logout</span>
                 </SecondaryLink>
             </div>

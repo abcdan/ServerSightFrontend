@@ -13,7 +13,6 @@ const pushNotificationsVapidKey = "BJjESW8nbMJRMsGtljjEaOTQI00Idcvd93ugfiPNOIZOQ
  */
 export async function getFirebaseConfig(): Promise<FirebaseDevice> {
     const deviceKey = await _getMessagingToken()
-    console.log(deviceKey)
 
     return {
         deviceKey: deviceKey

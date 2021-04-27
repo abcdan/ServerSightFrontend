@@ -11,6 +11,13 @@
         100% { -webkit-transform: rotate(360deg); }
     }
 
+    div {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     img {
         height: 50px;
         width: 50px;
@@ -20,4 +27,7 @@
         justify-content: center;
     }
 </style>
-<img src="favicon.png" alt="favicon">
+
+<div>
+    <img src="favicon.png" alt="favicon">
+</div>

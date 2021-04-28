@@ -23,6 +23,7 @@
 
     div.container {
         display: inline-block;
+        width: calc(100% - 50px);
         margin: 0;
         padding: 0;
     }

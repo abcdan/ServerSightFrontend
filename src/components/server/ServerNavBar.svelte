@@ -60,7 +60,8 @@
         color: #333;
     }
 
-    .first:hover ~ hr {        margin-left: 0;
+    .first:hover ~ hr {
+        margin-left: 0;
     }
 
     hr.second-activated, .second:hover ~ hr {
@@ -82,6 +83,12 @@
         background: rgb(52, 73, 102);
         border: none;
         transition: .3s ease-in-out;
+    }
+
+    @media only screen and (max-width: 1000px) {
+        a {
+            width: 24%;
+        }
     }
 </style>
 

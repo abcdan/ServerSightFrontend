@@ -10,7 +10,7 @@
         vertical-align: middle;
         width: 100%;
         height: 40px;
-        background-color: #BFCC94;
+        background-color: #0d1821;
         color: #F0F4EF;
         text-align: center;
         border: none;

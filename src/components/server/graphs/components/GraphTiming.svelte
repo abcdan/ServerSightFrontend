@@ -78,7 +78,7 @@ Pick custom timeframe:
     on:range-selected={onCustomDate}
     >
     <Button
-            backgroundColor="#BFCC94"
+            backgroundColor="#0d1821"
     >
         <span>Select custom time</span>
     </Button>

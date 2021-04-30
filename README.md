@@ -4,6 +4,7 @@ An server monitoring/documentation tool. This is the front-end part there are 2 
 - https://github.com/lukasvdberk/ServerSightAPI
 - https://github.com/lukasvdberk/ServerSightPostScript
 
+Currently runs at [this](https://serversight.lukas.sh) url.
 ## Installation
 Clone the project and install
 

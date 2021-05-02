@@ -1,7 +1,5 @@
 import type {User} from "../../models/user/user";
 import {HttpClient} from "../httpClient/httpClient";
-import {FieldError} from "../error/field.error";
-import {FieldsErrors} from "../error/fields.error";
 import { httpResponseToLocalException } from "../httpClient/httpExceptionHandler";
 import {Jwt} from "./jwt";
 
@@ -36,6 +34,10 @@ export class Auth {
         } else {
             throw httpResponseToLocalException(response)
         }
+    }
+
+    static isUserLoggedIn():  boolean {
+        return Jwt.getJwt() === undefined
     }
 
     /**

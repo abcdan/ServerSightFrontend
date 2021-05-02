@@ -14,7 +14,6 @@
     let fieldsErrors: FieldError[] = []
 
     let serverIcon: File
-    let serverCreated = true
 
     function saveServer() {
         popUpMessageStore.addMessage('Saving new server. Please wait!')

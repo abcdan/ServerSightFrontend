@@ -3,6 +3,8 @@
     import Popup from "../components/popup/Popup.svelte";
     import {setup} from "../services/httpClient/httpRequestListener";
     import {onMount} from "svelte";
+    import { stores } from '@sapper/app'
+    const { page } = stores()
 
     onMount(async() => {
         // import needs to be like this else the wrong firebase will be initialized
@@ -11,30 +13,33 @@
 
         setup()
     })
-
-    export let segment;
 </script>
 
-<style>
-    div {
-        position: absolute;
-        top: 75px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }
-
-    @media only screen and (max-width: 1000px) {
+<!--  Exclude the home page  -->
+{#if $page.path !== "/"}
+    <style>
         div {
-            top: 50px;
+            position: absolute;
+            top: 75px;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
-    }
-</style>
-<main>
-    <Nav {segment} />
-    <Popup />
-    <div>
-        <slot />
-    </div>
-</main>
 
+        @media only screen and (max-width: 1000px) {
+            div {
+                top: 50px;
+            }
+        }
+    </style>
+    <main>
+        <Popup />
+        <div>
+            <slot />
+        </div>
+    </main>
+{:else}
+    <main>
+        <slot />
+    </main>
+{/if}

@@ -16,8 +16,14 @@
         width: 60%;
     }
 
+    section.super-large {
+        margin: 0 auto;
+        height: 100vh;
+        width: 80%;
+    }
+
     @media screen and (max-width: 1000px) {
-        section.default, section.large {
+        section.default, section.large, section.super-large {
             padding-top: 10px;
             width: 90%;
         }

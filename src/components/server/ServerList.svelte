@@ -21,6 +21,7 @@
         margin: 0;
         padding: 0;
     }
+
     @media only screen and (max-width: 1200px) {
         ul {
             grid-template-columns: 1fr 1fr;

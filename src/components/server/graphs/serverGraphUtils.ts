@@ -3,9 +3,9 @@ interface ObjectFillerCallback {
 }
 
 /**
- * Will fill a cpu usage if there is a CPU usage missing from a given minute.
- * For example you want to fetch the last 30 minutes but there are only 28 cpu usages.
- * this method will then fill these 2 so that there is a cpu usage of every minute.
+ * Will fill a resource if there is a resource missing from a given minute.
+ * For example you want to fetch the last 30 minutes of cpu usages but there are only 28 cpu usages.
+ * this method will then fill these missing 2 so that there is a cpu usage of every minute.
  * @param existingArray
  * @param startDate
  * @param endDate

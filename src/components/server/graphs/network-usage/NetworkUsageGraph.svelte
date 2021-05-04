@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {fillEmptyTimestamps} from "../utils";
+    import {fillEmptyTimestamps} from "../serverGraphUtils";
     import {popUpMessageStore} from "../../../../stores/popupMessagesStore";
     import {onMount} from "svelte";
     import LoadingSpinner from "../../../shared/LoadingSpinner.svelte";

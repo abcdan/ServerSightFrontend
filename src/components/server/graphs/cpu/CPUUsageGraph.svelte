@@ -4,7 +4,7 @@
     import {ServerCpuUsageService} from "../../../../services/server/serverCpuUsageService";
     import {popUpMessageStore} from "../../../../stores/popupMessagesStore";
     import {onMount} from "svelte";
-    import {fillEmptyTimestamps} from "../utils";
+    import {fillEmptyTimestamps} from "../serverGraphUtils";
     import GraphTiming from "../components/GraphTiming.svelte";
     import DateTimeGraph from "../components/DateTimeGraph.svelte";
     import LoadingSpinner from "../../../shared/LoadingSpinner.svelte";

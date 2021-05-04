@@ -1,18 +1,18 @@
+interface ObjectFillerCallback {
+    (generatedDate: Date): any;
+}
+
 /**
  * Will fill a cpu usage if there is a CPU usage missing from a given minute.
  * For example you want to fetch the last 30 minutes but there are only 28 cpu usages.
  * this method will then fill these 2 so that there is a cpu usage of every minute.
- * @param cpuUsages
+ * @param existingArray
  * @param startDate
  * @param endDate
  * @param creationCallback - This callback will be called if a date needs to be filled and you can set how you want to handle that.
  */
-
-interface ObjectFiller {
-    (generatedDate: Date): any;
-}
 export function fillEmptyTimestamps (existingArray: { createdAt: Date } [], startDate: Date, endDate: Date,
-                                     creationCallback: ObjectFiller): {}[] {
+                                     creationCallback: ObjectFillerCallback): {}[] {
     let arrayToFill: {}[] = []
 
     _generateAllDatesBetweenDates(startDate, endDate).forEach((generatedDate) => {
@@ -28,7 +28,7 @@ export function fillEmptyTimestamps (existingArray: { createdAt: Date } [], star
 }
 
 function _dateMatches(date1: Date, date2: Date) {
-    // because we don't want to compare to the second
+    // because we don't want to compare it to the second
     return date1.getFullYear() === date2.getFullYear() &&
         date1.getMonth() === date2.getMonth() &&
         date1.getHours() === date2.getHours() &&

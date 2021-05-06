@@ -19,7 +19,7 @@
     section.super-large {
         margin: 0 auto;
         height: 100vh;
-        width: 80%;
+        width: 70%;
     }
 
     @media screen and (max-width: 1000px) {

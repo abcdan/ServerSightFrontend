@@ -23,6 +23,7 @@
         width: 4rem;
         height: 4rem;
         margin: 5px;
+        fill: #344966;
     }
 </style>
 

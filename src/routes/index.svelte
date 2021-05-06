@@ -40,7 +40,7 @@
 
     .feature-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
         list-style-type: none;
         grid-gap: 25px;
         margin: 0;
@@ -115,11 +115,31 @@
                 <FeatureCard icon="/logo-512.png" name="Documentation">
                     <p>Write server documentation in markdown!</p>
                 </FeatureCard>
-                <FeatureCard icon="/logo-512.png" name="Documentation">
-                    <p>Write server documentation in markdown!</p>
+                <FeatureCard icon="/logo-512.png" name="Opensource!">
+                    <p>
+                        You can see on github that there is nothing funky going around with your server data.
+                    </p>
                 </FeatureCard>
-                <FeatureCard icon="/logo-512.png" name="Documentation">
-                    <p>Write server documentation in markdown!</p>
+                <FeatureCard icon="/logo-512.png" name="Easy">
+                    <p>Almost everything can be configured from a easy to use dashboard!</p>
+                </FeatureCard>
+                <FeatureCard icon="/logo-512.png" name="Insight">
+                    <p>Get usages of different resources on your server</p>
+                    <ul>
+                        <li>Open ports</li>
+                        <li>Ip’s</li>
+                        <li>Hard disk usage</li>
+                        <li>CPU usage</li>
+                        <li>RAM Usage</li>
+                    </ul>
+                </FeatureCard>
+                <FeatureCard icon="/logo-512.png" name="Notifications">
+                    <p>Get notifications when a resource (for example CPU usage) reaches a certain threshold</p>
+                    <ul>
+                        <li>Hard disk usage</li>
+                        <li>CPU usage</li>
+                        <li>RAM Usage</li>
+                    </ul>
                 </FeatureCard>
             </section>
         </Container>

@@ -30,7 +30,6 @@
             from: fromDate,
             to: toDate
         }).then((cpuUsages) => {
-            console.log(cpuUsages)
             cpuUsageOfServer = fillEmptyTimestamps(cpuUsages, fromDate, toDate, (generatedDate: Date) => {
                     return {
                         averageCpuUsagePastMinute: null,

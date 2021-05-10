@@ -10,6 +10,21 @@
 	<link rel="stylesheet" href="global.css">
 	<link rel="manifest" href="manifest.json" crossorigin="use-credentials">
 	<link rel="icon" type="image/png" href="favicon.png">
+	<script>
+		import * as Sentry from "@sentry/browser";
+		import { Integrations } from "@sentry/tracing";
+
+
+		Sentry.init({
+			dsn: "https://4399f5e7894f41ea8cc46cf88d0967aa@o640509.ingest.sentry.io/5757029",
+			integrations: [new Integrations.BrowserTracing()],
+
+			// Set tracesSampleRate to 1.0 to capture 100%
+			// of transactions for performance monitoring.
+			// We recommend adjusting this value in production
+			tracesSampleRate: 1.0,
+		});
+	</script>
 	<!-- The core Firebase JS SDK is always required and must be listed first -->
 	<!-- Sapper creates a <script> tag containing `src/client.js`
 	     and anything else it needs to hydrate the app and

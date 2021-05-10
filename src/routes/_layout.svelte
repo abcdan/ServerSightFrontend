@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Nav from "../components/Nav.svelte";
     import Popup from "../components/popup/Popup.svelte";
     import {setup} from "../services/httpClient/httpRequestListener";
     import {onMount} from "svelte";
@@ -10,7 +9,6 @@
         // import needs to be like this else the wrong firebase will be initialized
         const firebaseSetupModule = await import("../services/firebase/firebaseMessenger");
         firebaseSetupModule.setupMessagingNotificationReceiver()
-
         setup()
     })
 </script>

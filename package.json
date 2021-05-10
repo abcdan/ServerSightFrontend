@@ -10,6 +10,8 @@
     "validate": "svelte-check --ignore src/node_modules/@sapper"
   },
   "dependencies": {
+    "@sentry/browser": "^6.3.6",
+    "@sentry/tracing": "^6.3.6",
     "compression": "^1.7.1",
     "marked": "^2.0.1",
     "polka": "next",

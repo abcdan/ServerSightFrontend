@@ -14,6 +14,7 @@
 
     const k = 1024
     const decimals = 2
+    // TODO can be refactored along with RAM (which almost does the same kind of calculation)
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
 
     let currentUnitSize = 'KB'
@@ -23,7 +24,7 @@
 
     onMount(() => {
         let fromDate: Date = new Date()
-        fromDate.setMinutes(fromDate.getMinutes() - 5)
+        fromDate.setMinutes(fromDate.getMinutes() - 4)
         fromDate.setSeconds(0)
 
         let toDate: Date = new Date()

@@ -18,7 +18,7 @@
 
     onMount(() => {
         let fromDate: Date = new Date()
-        fromDate.setMinutes(fromDate.getMinutes() - 5)
+        fromDate.setMinutes(fromDate.getMinutes() - 4)
         fromDate.setSeconds(0)
         let toDate: Date = new Date()
         getAndSetCpuUsage(fromDate, toDate)

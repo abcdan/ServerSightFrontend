@@ -21,18 +21,18 @@
     })
 </script>
 <style>
-    .gradient-background {
+    .gradient-background, .gradient-background:after {
         position: fixed;
-        height: 100vw;
+        height: 100%;
         width: 100%;
         background: linear-gradient(180deg, rgba(52, 73, 102, 1) 0%, rgba(13, 24, 33, 1) 100%);
     }
 
     section.welcome-message {
-        padding: 10px;
-        margin: 0;
+        padding: 0;
+        margin-top: 10px;
+        margin-bottom: 10px;
         display: inline-flex;
-        gap: 5px;
         flex-direction: row;
         align-items: flex-start;
         width: 100%;
@@ -48,17 +48,18 @@
     }
 
     img {
-        height: 175px;
+        height: 190px;
+        margin-right: 20px;
     }
 
     h1.welcome-message {
         display: block;
         font-size: 80px;
-        float: left;
     }
 
     p.welcome-message {
         font-size: 20px;
+        padding-left: 2.5px;
     }
 
     span {
@@ -71,18 +72,52 @@
     div.link-wrapper {
         display: inline-block;
         width: 150px;
+        margin-right: 10px;
     }
 
     h1.welcome-message, p.welcome-message {
+        display: block;
         color: white;
-        margin: 0;
-        padding: 0;
+        margin-bottom: 5px;
+        width: 100%;
         text-align: left;
     }
 
+    div.welcome-message {
+        padding-bottom: 5px
+    }
+
     @media only screen and (max-width: 1000px) {
-        p.welcome-message, h1.welcome-message {
+        img {
+            display: block;
+            width: 25%;
+            height: 25%;
+            margin: 0 auto;
+        }
+
+        section.welcome-message {
+            display: block;
+        }
+
+        div.link-wrapper {
+            margin-top: 10px;
+        }
+
+        h1.welcome-message {
+            font-size: 30px;
+        }
+
+        p.welcome-message {
             font-size: initial;
+        }
+
+        .feature-grid {
+            grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+        }
+
+        div.welcome-message {
+            width: 100%;
+            display: block;
         }
 
         div.link-wrapper {
@@ -100,8 +135,8 @@
         <Container cssClass="super-large">
             <section class="welcome-message">
                 <img src="/logo-512.png" alt="server sight logo" />
-                <div>
-                    <h1 class="welcome-message">Welcome to server sight!</h1>
+                <div class="welcome-message">
+                    <h1 class="welcome-message">Start using server sight!</h1>
                     <p class="welcome-message">
                         Start documenting and getting insights into your servers. This will be done with the following features.
                     </p>
@@ -111,9 +146,9 @@
                         </SecondaryLink>
                     </div>
                     <div class="link-wrapper">
-                        <Link href="https://github.com/lukasvdberk/ServerSightFrontend">
+                        <SecondaryLink href="https://github.com/lukasvdberk/ServerSightFrontend">
                             <span>Github</span>
-                        </Link>
+                        </SecondaryLink>
                     </div>
                 </div>
             </section>
@@ -121,7 +156,7 @@
                 <FeatureCard icon="/feature-icons/description_black_24dp.svg" name="Documentation">
                     <p>Write server documentation in markdown!</p>
                 </FeatureCard>
-                <FeatureCard icon="/feature-icons/lock_open_black_24dp.svg" name="Opensource!">
+                <FeatureCard icon="/feature-icons/lock_open_black_24dp.svg" name="Opensource">
                     <p>
                         You can see on github that there is nothing funky going around with your server data.
                     </p>

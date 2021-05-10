@@ -7,6 +7,7 @@
     article {
         display: flex;
         flex-direction: row;
+        align-items: stretch;
         position: relative;
         box-shadow: 0 1px 1px 0 rgba(0,0,0,0.07),0 3px 1px -2px rgba(0,0,0,0.6),0 1px 5px 0 rgba(0,0,0,0.2);
         border-radius: 5px;
@@ -17,6 +18,8 @@
 
     div, h1 {
         color: black;
+        padding: 0;
+        margin: 0;
     }
 
     img {

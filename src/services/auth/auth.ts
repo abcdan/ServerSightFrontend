@@ -37,7 +37,11 @@ export class Auth {
     }
 
     static isUserLoggedIn():  boolean {
-        return Jwt.getJwt() === undefined
+        try {
+            return Jwt.getJwt().length > 0
+        } catch (ignored) {
+            return false
+        }
     }
 
     /**

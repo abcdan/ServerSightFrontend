@@ -6,15 +6,15 @@
     import SecondaryLink from "../components/shared/buttons/SecondaryLink.svelte";
     import FeatureCard from "../components/about/FeatureCard.svelte";
     import Container from "../components/shared/Container.svelte";
-    import Link from "../components/shared/buttons/Link.svelte";
+    import { goto } from "@sapper/app";
 
     const animationDurationInMs = 500
     let showInformationPage = false
 
     onMount(async () => {
+        // if not logged in show them is about page
         if (Auth.isUserLoggedIn()) {
-            const goto = await import("@sapper/app");
-            goto('/servers', {})
+            await goto('/servers', {})
         } else {
             showInformationPage = true
         }

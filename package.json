@@ -1,6 +1,6 @@
 {
-  "name": "Server sight front-end",
-  "description": "TODO",
+  "name": "server-sight-front-end",
+  "description": "Server sight front-end built with svelte.",
   "version": "0.0.1",
   "scripts": {
     "dev": "sapper dev",
